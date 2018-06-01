@@ -1,43 +1,41 @@
 <template>
-  <div class="wrapper">
-    <!-- <notifications></notifications> -->
-    <!-- TODO: notifications -->
-    <side-bar class="sidebar"/>
-    <div class="main-panel">
-      <top-navbar />
-
-      <dashboard-content />
-
-      <content-footer v-if="!$route.meta.hideFooter" />
-    </div>
-  </div>
+<div class="wrapper">
+  <v-app>
+    <side-bar :toggleDrawer="drawer" @toggleDrawer="drawerToggled"/>
+    <top-navbar @toggleDrawer="drawer = !drawer"/>
+    <v-content>
+      <dashboard-content/>
+    </v-content>
+    <v-footer app inset>
+      {{drawer}}
+      <app-footer />
+    </v-footer>
+  </v-app>
+</div>
 </template>
-<style lang="scss">
-  .wrapper {
-    display: flex;
-    align-items: center;
-    .sidebar {
-      width: 260px;
-    }
-    .main-panel {
-      flex: 1;
-    }
-  }
-</style>
 <script>
-import SideBar from '@/components/Sidebar/SideBar'
-import TopNavbar from './TopNavbar.vue'
-import ContentFooter from './ContentFooter.vue'
-import DashboardContent from './Content.vue'
-import MobileMenu from './MobileMenu.vue'
+import SideBar from './SideBar'
+import TopNavbar from './TopNavbar'
+import AppFooter from './AppFooter'
+import DashboardContent from './Content'
 
 export default {
   components: {
     SideBar,
     TopNavbar,
     DashboardContent,
-    ContentFooter,
-    MobileMenu
+    AppFooter
+  },
+  data:() => ({
+    drawer: true
+  }),
+  methods: {
+    drawerToggled(val) {
+      this.drawer = val
+    }
   }
 }
 </script>
+
+<style lang="scss">
+</style>

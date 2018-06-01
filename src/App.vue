@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <Layout />
+    <Home />
   </div>
 </template>
 
 <script>
-import Layout from '@/views/Layout/Home'
+import Home from '@/views/Layout/Home'
 export default{
   components:{
-    Layout
+    Home
   }
 }
 </script>

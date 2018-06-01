@@ -2,11 +2,13 @@ import Vue from 'vue'
 import App from '@/App.vue'
 import router from '@/routes/'
 import store from '@/store/'
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.min.css'
 
-Vue.use(VueMaterial)
+import Vuetify from 'vuetify'
+Vue.use(Vuetify)
 
+import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@/assets/scss/style.scss'
 Vue.config.productionTip = false
 
 new Vue({
