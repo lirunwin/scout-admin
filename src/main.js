@@ -6,6 +6,8 @@ import store from '@/store/'
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
 
+import ProjectConfig from './config'
+Vue.prototype.$scout = ProjectConfig
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@/assets/scss/style.scss'

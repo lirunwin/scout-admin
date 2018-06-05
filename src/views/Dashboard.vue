@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="main-content">
-      <button type="button" name="button" @click='content += content'>asd</button>
       <div v-html="content">
 
       </div>
@@ -18,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .main-content {
+.main-content {
     height: 558px;
-  }
+}
 </style>

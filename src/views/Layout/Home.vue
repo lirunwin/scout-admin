@@ -1,8 +1,8 @@
 <template>
 <div class="wrapper">
   <v-app>
-    <side-bar :toggleDrawer="drawer" @toggleDrawer="drawerToggled"/>
-    <top-navbar @toggleDrawer="drawer = !drawer"/>
+    <side-bar :toggleDrawer="drawer" @toggleDrawer="drawerToggled" v-if="!$route.meta.hideSidebar" />
+    <top-navbar @toggleDrawer="drawer = !drawer" v-if="!$route.meta.hideTopNavbar" />
     <v-content>
       <dashboard-content/>
     </v-content>
@@ -26,7 +26,7 @@ export default {
     DashboardContent,
     AppFooter
   },
-  data:() => ({
+  data: () => ({
     drawer: true
   }),
   methods: {

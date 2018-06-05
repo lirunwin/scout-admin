@@ -1,7 +1,7 @@
 <template lang="html">
   <v-toolbar app absolute class="primary" dark>
     <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
-    <span class="title ml-3 mr-5">Google&nbsp;<span class="text">Keep</span></span>
+    <span class="title ml-3 mr-5">{{$scout.projectName}}</span>
     <v-text-field solo-inverted  flat label="Search" prepend-icon="search"></v-text-field>
     <v-spacer />
     <v-btn icon>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  data:() => ({
+  data: () => ({
     drawer: true
   }),
   methods: {
