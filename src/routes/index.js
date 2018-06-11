@@ -15,7 +15,7 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: Login,
       meta: {
         hideSidebar: true,
@@ -24,7 +24,7 @@ export default new Router({
     },
     {
       path: '/permission',
-      name: 'Permission',
+      name: 'permission',
       component: Permission
     }
   ]

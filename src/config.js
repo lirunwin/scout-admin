@@ -1,5 +1,5 @@
 export default {
-  projectName:'侦察兵后台管理系统',
+  projectName:'懒虫动动后台管理系统',
   constant: {
 
     // 数据状态
