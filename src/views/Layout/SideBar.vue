@@ -131,6 +131,16 @@ export default {
       {
         icon: 'keyboard',
         text: 'Go to the old version'
+      }, {
+        funcode: "system",
+        funname: "系统管理",
+        funtype: "FUNTYPE_JZSYSTEM",
+        icon: "lock",
+        id: "1528197070314154",
+        level: 1,
+        pid: "0",
+        sort: 0,
+        status: "DATA_NORMAL"
       }
     ]
   }),
