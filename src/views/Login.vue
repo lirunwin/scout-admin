@@ -2,7 +2,7 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
-        <v-card class="elevation-12">
+        <v-card class="elevation-5">
           <v-toolbar dark color="primary">
             <v-toolbar-title>{{$scout.projectName}}</v-toolbar-title>
           </v-toolbar>
@@ -14,13 +14,13 @@
                 :append-icon-cb="() => (showPwd = !showPwd)" :type="showPwd ? 'password' : 'text'"></v-text-field>
               <div class="captcha">
                 <v-text-field id="captcha" prepend-icon="lock" name="captcha" label="验证码" type="text"></v-text-field>
-                <img src="~@/assets/img/logo.png" alt="">
+                <img :src="captcha" alt="">
               </div>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary">登录</v-btn>
+            <v-btn color="primary" @click="login">登录</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -31,10 +31,19 @@
 <script>
 export default {
   data: () => ({
-    showPwd: false
+    showPwd: false,
+    captcha: 'http://192.168.1.3:8085/common/getVerifyCode'
   }),
   props: {
     source: String
+  },
+  methods: {
+    login() {
+      this.$http({
+        url: 'http://192.168.1.3:8085/system/getAllFunction',
+        method: 'get'
+      })
+    }
   }
 }
 </script>

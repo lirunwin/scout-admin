@@ -2,10 +2,10 @@ import Vue from 'vue'
 import App from '@/App.vue'
 import router from '@/routes/'
 import store from '@/store/'
-
+import axios from 'axios'
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
-
+Vue.prototype.$http = axios
 import ProjectConfig from './config'
 Vue.prototype.$scout = ProjectConfig
 import 'vuetify/dist/vuetify.min.css'
