@@ -1,5 +1,5 @@
 <template lang="html">
-  <v-toolbar app absolute :clipped-left="$vuetify.breakpoint.lgAndUp" dark class="primary">
+  <v-toolbar app absolute :clipped-left="$vuetify.breakpoint.lgAndUp" dark color="teal">
     <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
     <span class="title ml-3 mr-5">{{$scout.projectName}}</span>
     <v-text-field solo-inverted  flat label="Search" prepend-icon="search"></v-text-field>

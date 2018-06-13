@@ -1,0 +1,58 @@
+卷 local drive 的文件夹 PATH 列表
+卷序列号为 00000218 B4C6:BD99
+E:.
+│  Dashboard.vue
+│  Login.vue
+│  Permission.vue
+│  Posts.vue
+│  Team.Vue
+│  tree.txt
+│
+├─basic
+│      Links.vue
+│      Metro.vue
+│      MissionTags.vue
+│      Positions.vue
+│      ScoreTags.vue
+│      SpecialTags.vue
+│      Zone.vue
+│
+├─charge
+│      Charge.vue
+│      CustomerService.vue
+│      FeedBack.vue
+│      Salary.vue
+│
+├─charts
+│      Chart.vue
+│
+├─finance
+│      Apply.vue
+│      Common.vue
+│      Enterprise.vue
+│
+├─Layout
+│      AppFooter.vue
+│      Content.vue
+│      Home.vue
+│      SideBar.vue
+│      TopNavbar.vue
+│
+├─logs
+│      ApiCall.vue
+│      Exceptions.Vue
+│      Mail.vue
+│      Sms.vue
+│
+├─points
+│      Points.vue
+│      Team.Vue
+│
+├─system
+│      Feature.vue
+│      Role.vue
+│      Users.vue
+│
+└─user
+        Common.vue
+        Enterprise.vue

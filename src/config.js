@@ -1,5 +1,6 @@
 export default {
   projectName:'懒虫动动后台管理系统',
+  prototype:'https://mco2d9.axshare.com/',
   constant: {
 
     // 数据状态

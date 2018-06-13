@@ -4,6 +4,14 @@ import router from '@/routes/'
 import store from '@/store/'
 import axios from 'axios'
 import Vuetify from 'vuetify'
+// import sv from './i18n/vuetify/sv'
+//
+// Vue.use(Vuetify, {
+//   lang: {
+//     locales: { sv },
+//     current: 'sv'
+//   }
+// })
 Vue.use(Vuetify)
 Vue.prototype.$http = axios
 import ProjectConfig from './config'
