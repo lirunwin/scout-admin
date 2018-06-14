@@ -22,22 +22,6 @@ const actions = {
       console.log(error);
     });
   },
-  fetchUserProfile(context) {
-    UserService.getUserProfile().then((res) => {
-      const data = res.data;
-      context.commit('setUserProfile', data);
-    }).catch(error => {
-      console.log(error);
-    });
-  },
-  fetchQrcode(context) {
-    UserService.getQrcode().then((res) => {
-      const data = res.data;
-      context.commit('setQrcode', data);
-    }).catch(error => {
-      console.log(error);
-    });
-  },
   updateUserWalletAddress(context, payload) {
     alert(`no Api yet!
           payload:"${payload}"`);
