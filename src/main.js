@@ -4,15 +4,16 @@ import router from '@/routes/'
 import store from '@/store/'
 import axios from 'axios'
 import Vuetify from 'vuetify'
-// import sv from './i18n/vuetify/sv'
-//
-// Vue.use(Vuetify, {
-//   lang: {
-//     locales: { sv },
-//     current: 'sv'
-//   }
-// })
-Vue.use(Vuetify)
+import colors from 'vuetify/es5/util/colors'
+
+Vue.use(Vuetify, {
+  theme: {
+    primary: colors.teal.base,
+    secondary: colors.grey.lighten3,
+    accent: colors.shades.black,
+    error: colors.red.accent3
+  }
+})
 Vue.prototype.$http = axios
 import ProjectConfig from './config'
 Vue.prototype.$scout = ProjectConfig
