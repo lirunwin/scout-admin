@@ -16,11 +16,11 @@
       </v-btn>
     </v-toolbar>
   </v-container>
-  <v-container fluid grid-list-lg>
+  <v-container fluid v-bind="{[`grid-list-${$vuetify.breakpoint.name}`]: true }">
     <v-layout row warp align-center>
       <v-flex>
         <v-select
-          :items="statuses"
+          :items="constant.status"
           item-text="label"
           item-value="value"
           v-model="status"
@@ -30,10 +30,10 @@
       </v-flex>
       <v-flex>
         <v-select
-          :items="statuses"
+          :items="constant.level"
           item-text="label"
           item-value="value"
-          v-model="status"
+          v-model="level"
           label="企业状态"
           return-object
         ></v-select>
@@ -48,12 +48,11 @@
       <v-btn color="primary" @click="dialog = !dialog">搜索</v-btn>
       <v-flex>
         <v-select
-          :items="statuses"
+          :items="constant.orderBy"
           item-text="label"
           item-value="value"
-          v-model="status"
+          v-model="orderBy"
           label="企业状态"
-          return-object
         ></v-select>
       </v-flex>
       <v-spacer></v-spacer>
@@ -129,30 +128,10 @@ export default {
   data() {
     return {
       status: '',
+      level: '',
+      orderBy: '',
       dialog: false,
-      headers: [{
-          text: '模块名称',
-          align: 'left',
-          sortable: false,
-          value: 'name'
-        },
-        {
-          text: '路径',
-          value: 'calories'
-        },
-        {
-          text: '权限编码',
-          value: 'fat'
-        },
-        {
-          text: '状态',
-          value: 'carbs'
-        },
-        {
-          text: '操作',
-          value: 'protein'
-        }
-      ],
+      constant: this.$config.constant.user.enterprise,
       desserts: [{
           id: false,
           pid: 'Frozen Yogurt',
@@ -236,30 +215,27 @@ export default {
           protein: 7
         }
       ],
-      statuses: [{
-          label: '新入驻',
-          value: 'COMP_STATUS_NEW',
-          sort: '0'
+      headers: [{
+          text: '模块名称',
+          align: 'left',
+          sortable: false,
+          value: 'name'
         },
         {
-          label: '正常',
-          value: 'COMP_STATUS_NORMAL',
-          sort: '0'
+          text: '路径',
+          value: 'calories'
         },
         {
-          label: '变更中',
-          value: 'COMP_STATUS_CHANGE',
-          sort: '0'
+          text: '权限编码',
+          value: 'fat'
         },
         {
-          label: '入驻审核失败',
-          value: 'COMP_STATUS_NEW_CHECK_FAIL',
-          sort: '0'
+          text: '状态',
+          value: 'carbs'
         },
         {
-          label: '变更审核失败',
-          value: 'COMP_STATUS_CHANGE_CHECK_FAIL',
-          sort: '0'
+          text: '操作',
+          value: 'protein'
         }
       ]
     }

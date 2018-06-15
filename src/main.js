@@ -5,7 +5,7 @@ import store from '@/store/'
 import axios from 'axios'
 import Vuetify from 'vuetify'
 import colors from 'vuetify/es5/util/colors'
-
+import config from '@/config'
 Vue.use(Vuetify, {
   theme: {
     primary: colors.teal.base,
@@ -14,7 +14,8 @@ Vue.use(Vuetify, {
     error: colors.red.accent3
   }
 })
-Vue.prototype.$http = axios
+Vue.prototype.$http = axios;
+Vue.prototype.$config = config;
 import ProjectConfig from './config'
 Vue.prototype.$scout = ProjectConfig
 import 'vuetify/dist/vuetify.min.css'
