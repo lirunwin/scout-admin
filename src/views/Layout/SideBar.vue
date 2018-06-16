@@ -22,7 +22,7 @@
             <v-list-tile
               v-for="(child, j) in item.children"
               :key="j"
-              :to="{ path: 'user/enterprise' }"
+              :to="{ path: '/user/enterprise' }"
             >
               <v-list-tile-action v-if="child.icon">
                 <v-icon>{{ child.icon }}</v-icon>
@@ -66,9 +66,9 @@ export default {
         model: true,
         children: [{
           funcode: "system",
-          funname: "用户管理",
+          funname: "企业用户",
           funtype: "FUNTYPE_JZSYSTEM",
-          icon: "lock",
+          icon: "company",
           id: "1528197070314152",
           level: 1,
           pid: "0",
@@ -120,34 +120,6 @@ export default {
         pid: "0",
         sort: 0,
         status: "DATA_NORMAL"
-      }
-    ],
-    items: [{
-        icon: 'keyboard_arrow_up',
-        'icon-alt': 'keyboard_arrow_down',
-        text: 'Labels',
-        model: true,
-        children: [{
-          icon: 'add',
-          text: 'Create label'
-        }]
-      },
-      {
-        icon: 'keyboard_arrow_up',
-        'icon-alt': 'keyboard_arrow_down',
-        text: 'More',
-        model: false,
-        children: [{
-          text: 'Import'
-        }, {
-          text: 'Export'
-        }, {
-          text: 'Print'
-        }, {
-          text: 'Undo changes'
-        }, {
-          text: 'Other contacts'
-        }]
       }
     ]
   }),

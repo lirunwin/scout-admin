@@ -18,8 +18,8 @@ Vue.prototype.$http = axios;
 Vue.prototype.$config = config;
 import ProjectConfig from './config'
 Vue.prototype.$scout = ProjectConfig
-import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import 'vuetify/dist/vuetify.min.css'
 import '@/assets/scss/style.scss'
 Vue.config.productionTip = false
 

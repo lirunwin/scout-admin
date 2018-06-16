@@ -1,7 +1,7 @@
 import Enterprise from '@/views/user/Enterprise';
 export default  [
   {
-    path: 'enterprise',
+    path: '/user/enterprise',
     name: 'enterprise',
     component: Enterprise
   },

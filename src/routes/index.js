@@ -29,9 +29,7 @@ export default new Router({
       name: 'permission',
       component: Permission
     },
-    {
-      path: '/user',
-      children: UserPages,
-    },
+    ...UserPages,
+    
   ]
 })
