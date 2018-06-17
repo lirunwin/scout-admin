@@ -1,6 +1,6 @@
 <template lang="html">
 <div class="permission">
-  <v-container fluid grid-list-xs,sm,md,lg,xl>
+  <v-container fluid>
     <v-toolbar light color="secondary" flat>
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
       <v-toolbar-title>企业用户</v-toolbar-title>
@@ -16,61 +16,63 @@
       </v-btn>
     </v-toolbar>
   </v-container>
-  <v-container fluid v-bind="{[`grid-list-${$vuetify.breakpoint.name}`]: true }">
-    <v-layout row warp align-center>
-      <v-flex>
+  <v-container
+    class="py-0"
+    :fluid="$vuetify.breakpoint.name !== 'xs' || $vuetify.breakpoint.name !== 'sm'"
+    v-bind="{[`grid-list-${$vuetify.breakpoint.name}`]: true }"
+    >
+    <v-layout row wrap align-center>
+      <v-flex xs6 md2>
         <v-select
           :items="constant.status"
           item-text="label"
           item-value="value"
           v-model="status"
           label="企业状态"
-          return-object
         ></v-select>
       </v-flex>
-      <v-flex>
+      <v-flex xs6 md2>
         <v-select
           :items="constant.level"
           item-text="label"
           item-value="value"
           v-model="level"
-          label="企业状态"
-          return-object
+          label="企业等级"
         ></v-select>
       </v-flex>
-      <v-flex>
+      <v-flex xs12 md4 class="pb-2">
         <v-text-field
           name="name"
           label="关键词"
+          v-model="keyword"
           id="id"
         ></v-text-field>
       </v-flex>
-      <v-btn color="primary" @click="dialog = !dialog">搜索</v-btn>
+      <v-flex style="flex:0" class="pb-2 px-0"><v-btn color="primary" class="mb-3" @click="dialog = !dialog">搜索</v-btn></v-flex>
       <v-flex>
         <v-select
           :items="constant.orderBy"
           item-text="label"
           item-value="value"
           v-model="orderBy"
-          label="企业状态"
+          label="排序"
         ></v-select>
       </v-flex>
-      <v-spacer></v-spacer>
     </v-layout>
   </v-container>
-  <v-container fluid>
+  <v-container fluid class="py-0">
     <v-data-table
-      :headers="headers"
+      :headers="constant.tableHeader"
       :items="desserts"
-      hide-actions
-      class="elevation-1 mt-3"
+      no-data-text="未查询到数据..."
+      no-results-text="无筛选结果"
+      rows-per-page-text="每页显示"
+      :rows-per-page-items='[5,10,25,{"text":"全部","value":-1}]'
+      disable-initial-sort
+      class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td class="">{{ props.item.calories }}</td>
-        <td class="">{{ props.item.fat }}</td>
-        <td class="">{{ props.item.carbs }}</td>
-        <td class="">{{ props.item.protein }}</td>
+        <td v-for="index of constant.tableHeader.length" :key="index">{{ props.item[constant.tableHeader[index-1].value] || '-'}}</td>
       </template>
     </v-data-table>
     <v-layout row justify-center >
@@ -130,17 +132,22 @@ export default {
       status: '',
       level: '',
       orderBy: '',
+      keyword: '',
       dialog: false,
       constant: this.$config.constant.user.enterprise,
       desserts: [{
-          id: false,
-          pid: 'Frozen Yogurt',
-          funname: 159,
-          funcode: 24,
-          url: 4.0,
-          icon: '',
-          sort: '',
-          status: ''
+          value: '正常',
+          name: 'aaa',
+          calories: '13554016524',
+          fat: '民营',
+          carbs: 'VIP',
+          protein: '小猪佩奇',
+          cellphone: '13965412365',
+          location: '四川成都',
+          deposit: 800,
+          score: 9.8,
+          posts: 99,
+          createTime: '2019-12-12 08:12'
         },
         {
           value: false,
@@ -213,29 +220,30 @@ export default {
           fat: 26.0,
           carbs: 65,
           protein: 7
-        }
-      ],
-      headers: [{
-          text: '模块名称',
-          align: 'left',
-          sortable: false,
-          value: 'name'
         },
         {
-          text: '路径',
-          value: 'calories'
+          value: false,
+          name: 'KitKat',
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
         },
         {
-          text: '权限编码',
-          value: 'fat'
+          value: false,
+          name: 'KitKat',
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
         },
         {
-          text: '状态',
-          value: 'carbs'
-        },
-        {
-          text: '操作',
-          value: 'protein'
+          value: false,
+          name: 'KitKat',
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7
         }
       ]
     }

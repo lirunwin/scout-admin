@@ -24,7 +24,7 @@
               :key="j"
               :to="{ path: '/user/enterprise' }"
             >
-              <v-list-tile-action v-if="child.icon">
+              <v-list-tile-action v-if="child.icon" class="pl-3">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
@@ -65,17 +65,30 @@ export default {
         status: "DATA_NORMAL",
         model: true,
         children: [{
-          funcode: "system",
-          funname: "企业用户",
-          funtype: "FUNTYPE_JZSYSTEM",
-          icon: "company",
-          id: "1528197070314152",
-          level: 1,
-          pid: "0",
-          sort: 0,
-          status: "DATA_NORMAL",
-          path: 'user/enterprise'
-        }]
+            funcode: "system",
+            funname: "企业用户",
+            funtype: "FUNTYPE_JZSYSTEM",
+            icon: "person_outline",
+            id: "1528197070314152",
+            level: 1,
+            pid: "0",
+            sort: 0,
+            status: "DATA_NORMAL",
+            path: '/user/enterprise'
+          },
+          {
+            funcode: "system",
+            funname: "个人用户",
+            funtype: "FUNTYPE_JZSYSTEM",
+            icon: "person",
+            id: "1528197070314152",
+            level: 1,
+            pid: "0",
+            sort: 0,
+            status: "DATA_NORMAL",
+            path: '/user/common'
+          }
+        ]
       },
       {
         funcode: "system",
@@ -86,7 +99,32 @@ export default {
         level: 1,
         pid: "0",
         sort: 0,
-        status: "DATA_NORMAL"
+        status: "DATA_NORMAL",
+        children: [{
+            funcode: "system",
+            funname: "兼职招聘",
+            funtype: "FUNTYPE_JZSYSTEM",
+            icon: "sentiment_satisfied",
+            id: "1528197070314152",
+            level: 1,
+            pid: "0",
+            sort: 0,
+            status: "DATA_NORMAL",
+            path: '/user/enterprise'
+          },
+          {
+            funcode: "system",
+            funname: "实习招聘",
+            funtype: "FUNTYPE_JZSYSTEM",
+            icon: "sentiment_very_satisfied",
+            id: "1528197070314152",
+            level: 1,
+            pid: "0",
+            sort: 0,
+            status: "DATA_NORMAL",
+            path: '/user/common'
+          }
+        ]
       },
       {
         funcode: "system",

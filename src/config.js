@@ -1,15 +1,23 @@
 export default {
-  projectName:'懒虫动动后台管理系统',
-  prototype:'https://mco2d9.axshare.com/',
+  projectName: '懒虫动动后台管理系统',
+  prototype: 'https://mco2d9.axshare.com/',
   constant: {
     // 数据状态
-    DATA_NORMAL: { name: "正常", value: 1 },
-    DATA_DISABLED: { name: "停用", value: 2 },
-    DATA_DELETED: { name:"删除", value: 3 },
+    DATA_NORMAL: {
+      name: '正常',
+      value: 1
+    },
+    DATA_DISABLED: {
+      name: '停用',
+      value: 2
+    },
+    DATA_DELETED: {
+      name: '删除',
+      value: 3
+    },
     user: {
       enterprise: {
-        status: [
-          {
+        status: [{
             label: '新入驻',
             value: 'COMP_STATUS_NEW',
             sort: '0'
@@ -35,8 +43,7 @@ export default {
             sort: '0'
           }
         ],
-        level: [
-          {
+        level: [{
             label: '普通客户',
             value: 'level_1',
             sort: '0'
@@ -47,8 +54,7 @@ export default {
             sort: '0'
           },
         ],
-        orderBy:[
-          {
+        orderBy: [{
             label: '默认排序',
             value: 'default',
             sort: '0'
@@ -60,8 +66,8 @@ export default {
           },
           {
             label: '信誉最高',
-            value: '',
-            sort: 'score'
+            value: 'score',
+            sort: '0'
           },
           {
             label: '保证金最多',
@@ -73,8 +79,60 @@ export default {
             value: 'amount',
             sort: '0'
           },
+        ],
+        tableHeader: [{
+            text: '企业状态',
+            align: 'left',
+            sortable: false,
+            value: 'name',
+            sort: 0
+          },
+          {
+            text: '企业名称',
+            value: 'calories'
+          },
+          {
+            text: '账号',
+            value: 'fat'
+          },
+          {
+            text: '公司性质',
+            value: 'carbs'
+          },
+          {
+            text: '企业等级',
+            value: 'protein'
+          },
+          {
+            text: '联系人',
+            value: 'protein'
+          },
+          {
+            text: '电话',
+            value: 'cellphone'
+          },
+          {
+            text: '所在地区',
+            value: 'location'
+          },
+          {
+            text: '保证金',
+            value: 'deposit'
+          },
+          {
+            text: '信誉',
+            value: 'score'
+          },
+          {
+            text: '发布信息',
+            value: 'posts'
+          },
+          {
+            text: '创建时间',
+            value: 'createTime'
+          }
         ]
       }
     }
   }
-}
+};
