@@ -92,6 +92,7 @@ export default {
     },
     deleteItem(item) {
       console.log(item);
+<<<<<<< HEAD
     },
     prefix(level) {
       switch (level) {
@@ -100,6 +101,8 @@ export default {
 
       }
       return 'px'
+=======
+>>>>>>> 8df2c0858b4049aba22bcb71b8469d7bd5383ffc
     }
   }
 }
