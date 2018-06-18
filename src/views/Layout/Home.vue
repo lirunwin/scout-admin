@@ -4,7 +4,7 @@
     <side-bar :toggleDrawer="drawer" @toggleDrawer="drawerToggled" v-if="!$route.meta.hideSidebar" />
     <top-navbar @toggleDrawer="drawer = !drawer" v-if="!$route.meta.hideTopNavbar" />
     <v-content>
-      <dashboard-content/>
+      <main-content />
     </v-content>
     <v-footer app inset>
       {{drawer}}
@@ -17,18 +17,21 @@
 import SideBar from './SideBar'
 import TopNavbar from './TopNavbar'
 import AppFooter from './AppFooter'
-import DashboardContent from './Content'
+import MainContent from './Content'
 
 export default {
   components: {
     SideBar,
     TopNavbar,
-    DashboardContent,
+    MainContent,
     AppFooter
   },
   data: () => ({
-    drawer: true
+    drawer: false
   }),
+  mounted() {
+    this.drawer = this.$vuetify.breakpoint.lgAndUp
+  },
   methods: {
     drawerToggled(val) {
       this.drawer = val

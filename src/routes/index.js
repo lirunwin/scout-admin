@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Dashboard from '@/views/Dashboard';
+// import Dashboard from '@/views/Dashboard';
 import Login from '@/views/Login';
 import Permission from '@/views/Permission';
 import UserPages from './user';
-import Enterprise from '@/views/user/Enterprise';
+import SystemPages from './system';
+import Feature from '@/views/system/Feature';
 Vue.use(Router)
 
 export default new Router({
@@ -12,8 +13,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'dashboard',
-      component: Enterprise
+      name: 'Feature',
+      component: Feature
     },
     {
       path: '/login',
@@ -30,6 +31,5 @@ export default new Router({
       component: Permission
     },
     ...UserPages,
-    
   ]
 })
