@@ -5,6 +5,7 @@ const state = {
 };
 const getters = {
   featureList: state => state.featureList,
+  featureParents: state => state.featureList.filter(feature => feature.level === 1),
   sideBar: state => state.featureList.filter(feature => feature.level === 1).map(parent => {
     let children = state.featureList.filter(child => parent.id === child.pid);
     if(children.length > 0) {

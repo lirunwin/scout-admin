@@ -93,47 +93,58 @@ export default {
           },
           {
             text: '企业名称',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '账号',
-            value: 'fat'
+            value: 'fat',
+            sortable: false
           },
           {
             text: '公司性质',
-            value: 'carbs'
+            value: 'carbs',
+            sortable: false
           },
           {
             text: '企业等级',
-            value: 'protein'
+            value: 'protein',
+            sortable: false
           },
           {
             text: '联系人',
-            value: 'protein'
+            value: 'protein',
+            sortable: false
           },
           {
             text: '电话',
-            value: 'cellphone'
+            value: 'cellphone',
+            sortable: false
           },
           {
             text: '所在地区',
-            value: 'location'
+            value: 'location',
+            sortable: false
           },
           {
             text: '保证金',
-            value: 'deposit'
+            value: 'deposit',
+            sortable: false
           },
           {
             text: '信誉',
-            value: 'score'
+            value: 'score',
+            sortable: false
           },
           {
             text: '发布信息',
-            value: 'posts'
+            value: 'posts',
+            sortable: false
           },
           {
             text: '创建时间',
-            value: 'createTime'
+            value: 'createTime',
+            sortable: false
           }
         ]
       },
@@ -201,51 +212,63 @@ export default {
           },
           {
             text: '手机',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '认证',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '性别',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '最高学历',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '所在地区',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '加入战队',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '已领取任务',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '账户余额',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '信誉',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '积分',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '经验等级',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           },
           {
             text: '创建时间',
-            value: 'calories'
+            value: 'calories',
+            sortable: false
           }
         ]
       }
@@ -261,15 +284,18 @@ export default {
         },
         {
           text: '路径',
-          value: 'url'
+          value: 'url',
+          sortable: false
         } ,
         {
           text: '状态',
-          value: 'status'
+          value: 'status',
+          sortable: false
         },
         {
           text: '操作',
-          value: 'action'
+          value: 'action',
+          sortable: false
         }
       ]
     }

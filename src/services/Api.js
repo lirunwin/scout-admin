@@ -3,6 +3,7 @@ import config from '@/config';
 
 let instance = axios.create({
   baseURL: config.baseURL,
+  // timeout: 1000,
   headers: {
     // Authorization: `Bearer ${store.state.token}`
   }
@@ -12,6 +13,7 @@ instance.interceptors.response.use(response => {
 
   return response.data.data;
 }, error => {
+  console.log({error});
   return Promise.reject(error);
 });
 
