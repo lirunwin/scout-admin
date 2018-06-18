@@ -11,7 +11,7 @@ Vue.use(Vuetify, {
     primary: colors.teal.base,
     secondary: colors.grey.lighten3,
     accent: colors.shades.black,
-    error: colors.red.accent3
+    error: colors.red.accent2
   }
 })
 Vue.prototype.$http = axios;
