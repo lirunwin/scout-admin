@@ -28,7 +28,7 @@
             color="primary"
             dark>新增模块</v-btn>
           <v-card>
-            <v-card-title>
+            <v-card-title class="pb-0">
               <span class="headline">{{!feature.id? '新增模块' : '修改模块'}}</span>
               <v-spacer></v-spacer>
               <v-btn slot="activator"
@@ -37,39 +37,45 @@
                 <v-icon>close</v-icon>
               </v-btn>
             </v-card-title>
-            <v-card-text>
-              <v-container grid-list-md>
+            <v-card-text class="py-0">
+              <v-container grid-list-md
+                class="py-0 px-0">
                 <v-layout row
                   align-center
                   wrap>
-                  <v-flex xs12>
+                  <v-flex xs12
+                    class="py-0">
                     <v-select :items="featureParents"
                       v-model="feature.pid"
                       item-text="funname"
                       item-value="id"
                       label="请选择父级分类"></v-select>
                   </v-flex>
-                  <v-flex xs12>
+                  <v-flex xs12
+                    class="py-0">
                     <v-text-field name="name"
                       label="模块名称"
                       :rules="rules.funname"
                       required
                       v-model="feature.funname"></v-text-field>
                   </v-flex>
-                  <v-flex xs12>
+                  <v-flex xs12
+                    class="py-0">
                     <v-text-field name="name"
                       label="路径"
                       :rules="rules.url"
                       v-model="feature.url"></v-text-field>
                   </v-flex>
-                  <v-flex xs12>
+                  <v-flex xs12
+                    class="py-0">
                     <v-text-field name="name"
                       label="模块代码"
                       required
                       :rules="rules.funcode"
                       v-model="feature.funcode"></v-text-field>
                   </v-flex>
-                  <v-flex xs12>
+                  <v-flex xs12
+                    class="py-0">
                     <v-text-field name="name"
                       label="排序"
                       required
@@ -80,11 +86,11 @@
                 </v-layout>
                 <v-layout row
                   align-center>
-                  <v-flex class="pl-0"
+                  <v-flex class="py-0"
                     style="flex-grow: 0;">
                     状态：
                   </v-flex>
-                  <v-flex>
+                  <v-flex class="py-0">
                     <v-switch color="primary"
                       hide-details
                       :true-value="dataStatus.on[0]"
@@ -173,7 +179,10 @@
 </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {
+  mapGetters,
+  mapActions
+} from "vuex";
 export default {
   name: "feature",
   data() {
@@ -215,7 +224,11 @@ export default {
       let on = statusArray.find(status => status[1].value === 1);
       let off = statusArray.find(status => status[1].value === 2);
       let deprecated = statusArray.find(status => status[1].value === 3);
-      return ({ on, off, deprecated });
+      return ({
+        on,
+        off,
+        deprecated
+      });
     }
   },
   methods: {
