@@ -22,7 +22,7 @@
             <v-list-tile
               v-for="(child, j) in item.children"
               :key="j"
-              :to="{ path: child.path }"
+              :to="{ path: child.url }"
             >
               <v-list-tile-action v-if="child.icon" class="pl-3">
                 <v-icon>{{ child.icon }}</v-icon>
@@ -46,6 +46,7 @@
           </v-list-tile>
         </template>
       </v-list>
+      <pre class="caption">{{sideBar}}</pre>
   </v-navigation-drawer>
 </template>
 

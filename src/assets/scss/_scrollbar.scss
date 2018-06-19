@@ -1,4 +1,4 @@
-.scrollbar {
+* {
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -15,7 +15,7 @@
     background: #e1e1e1;
   }
   &::-webkit-scrollbar-thumb {
-    background: #757575;
+    background: #009688;
   }
 }
 .scrollbar-hide {

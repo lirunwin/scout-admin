@@ -31,5 +31,6 @@ export default new Router({
       component: Permission
     },
     ...UserPages,
+    ...SystemPages,
   ]
 })

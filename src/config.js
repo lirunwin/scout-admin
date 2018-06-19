@@ -6,18 +6,20 @@ export default {
   constant: {
     // 数据状态
     share: {
-      DATA_NORMAL: {
-        name: '正常',
-        value: 1
-      },
-      DATA_DISABLED: {
-        name: '停用',
-        value: 2
-      },
-      DATA_DELETED: {
-        name: '删除',
-        value: 3
-      },
+      data: { // value不能更改
+        DATA_NORMAL: {
+          name: '正常',
+          value: 1
+        },
+        DATA_DISABLED: {
+          name: '停用',
+          value: 2
+        },
+        DATA_DELETED: {
+          name: '删除',
+          value: 3
+        },
+      }
     },
     user: {
       enterprise: {
