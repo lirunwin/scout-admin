@@ -88,38 +88,34 @@ export default {
           }],
         level: [{
             label: '普通客户',
-            value: 'level_1',
+            value: 'COM_LEVEL_GENERAL',
             sort: '0'
           },
           {
-            label: '工资保障',
-            value: 'level_2',
+            label: 'VIP客户',
+            value: 'COM_LEVEL_VIP',
             sort: '0'
           },
         ],
         orderBy: [{
             label: '默认排序',
-            value: 'default',
-            sort: '0'
-          },
-          {
-            label: '最新创建',
-            value: 'newest',
-            sort: '0'
+            value: 'createtime',
+            sort: '0',
+            default: true
           },
           {
             label: '信誉最高',
-            value: 'score',
+            value: 'reputation',
             sort: '0'
           },
           {
             label: '保证金最多',
-            value: 'deposit',
+            value: 'marginmoney',
             sort: '0'
           },
           {
             label: '发布信息最多',
-            value: 'amount',
+            value: 'totalnum',
             sort: '0'
           },
         ],
@@ -133,7 +129,8 @@ export default {
           {
             text: '名称',
             value: 'comname',
-            sortable: false
+            sortable: false,
+            detail: true
           },
           {
             text: '账号',

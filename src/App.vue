@@ -1,14 +1,19 @@
 <template>
-  <div id="app">
-    <Home />
-  </div>
+<div id="app">
+  <Home />
+</div>
 </template>
 
 <script>
 import Home from '@/views/Layout/Home'
-export default{
-  components:{
+export default {
+  components: {
     Home
   }
 }
 </script>
+<style>
+a {
+  text-decoration: none;
+}
+</style>

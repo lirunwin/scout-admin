@@ -27,7 +27,7 @@
           :items="constant.status"
           item-text="label"
           item-value="value"
-          v-model="status"
+          v-model="filter.comstatus"
           label="企业状态"
         ></v-select>
       </v-flex>
@@ -36,7 +36,7 @@
           :items="constant.level"
           item-text="label"
           item-value="value"
-          v-model="level"
+          v-model="filter.businesslevel"
           label="企业等级"
         ></v-select>
       </v-flex>
@@ -44,21 +44,23 @@
         <v-text-field
           name="name"
           label="关键词"
-          v-model="keyword"
+          v-model="filter.paramlike"
           id="id"
         ></v-text-field>
       </v-flex>
-      <v-flex style="flex:0" class="pb-2 px-0"><v-btn color="primary" class="mb-3" @click="dialog = !dialog">搜索</v-btn></v-flex>
       <v-flex>
         <v-select
           :items="constant.orderBy"
           item-text="label"
           item-value="value"
-          v-model="orderBy"
+          v-model="filter.ordercondition"
           label="排序"
         ></v-select>
       </v-flex>
+      <v-flex style="flex:0" class="pb-2 px-0"><v-btn color="primary" class="mb-3" @click="search">搜索</v-btn></v-flex>
+      <v-flex style="flex:0" class="pb-2 px-0"><v-btn color="primary lighten-1" class="mb-3" @click="resetSerach">重置</v-btn></v-flex>
     </v-layout>
+    {{filter}}
   </v-container>
   <v-container fluid class="py-0" v-if="enterprises">
     <v-data-table
@@ -75,6 +77,11 @@
         <td v-for="index of tableHeaders.length" :key="index">
           <template v-if="tableHeaders[index-1].constant && tableHeaders[index-1].constant[0]">
             {{ getStatusLabelByConstVal(props.item[tableHeaders[index-1].value],tableHeaders[index-1].constant[1]) }}
+          </template>
+          <template v-else-if="tableHeaders[index-1].detail">
+            <router-link :to="{ name: 'EnterpriseDetail', params: { id: props.item.id || 0, accountnum: props.item.accountnum  } }">
+                {{ props.item[tableHeaders[index-1].value] }}
+            </router-link>
           </template>
           <template v-else>
             {{ props.item[tableHeaders[index-1].value] }}
@@ -95,7 +102,14 @@ export default {
       level: '',
       orderBy: '',
       keyword: '',
-      dialog: false
+      filter: {
+        comstatus: '',
+        businesslevel: '',
+        paramlike: '',
+        ordercondition: '',
+        pageindex: 1,
+        pagesize: 100
+      }
     }
   },
   computed: {
@@ -119,12 +133,30 @@ export default {
       }
       let constant = constantObj.find(constant => constant.value === val);
       return constant.label || val;
+    },
+    search() {
+      this.getAllEnterprises(this.filter);
+    },
+    getDefaultOrderBy() {
+      let defaultOrder = this.constant.orderBy.find(order => order.default === true);
+      return defaultOrder.value;
+    },
+    resetSerach() {
+      this.filter = {
+        comstatus: '',
+        businesslevel: '',
+        paramlike: '',
+        ordercondition: '',
+        pageindex: 1,
+        pagesize: 100
+      }
     }
   },
   mounted() {
     this.getAllEnterprises({
       pageindex: 1,
-      pagesize: 100
+      pagesize: 100,
+      ordercondition: this.getDefaultOrderBy()
     });
   }
 }
