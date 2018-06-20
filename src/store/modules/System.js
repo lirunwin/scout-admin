@@ -16,7 +16,7 @@ const state = {
     title: '温馨提示',
     text: '',
   },
-  roles:[]
+  roles: []
 };
 const getters = {
   featureList: state => state.featureList,
@@ -41,15 +41,15 @@ const getters = {
 const mutations = {
   setFeatureList: (state, payload) => state.featureList = payload,
   setRolesList: (state, payload) => state.roles = payload,
-  pushFeatureList: (state, payload) => {l
-    return state.featureList.push(payload)
+  pushFeatureList: (state, payload) => {
+    return state.featureList.push(payload);
   },
   updataFeatureList: (state, payload) => state.featureList = state.featureList
     .map(feature => {
       if (feature.id === payload.id) {
-        return payload
+        return payload;
       }
-      return feature
+      return feature;
     }),
   updataSnackbar: (state, payload) => state.snackbar = payload,
   updataConfirm: (state, payload) => state.confirm = payload,
@@ -57,7 +57,7 @@ const mutations = {
     .map(feature => {
       let updatedFeatureId = payload.ids.find(item => item === feature.id);
       if (updatedFeatureId) {
-        feature.status = payload.status
+        feature.status = payload.status;
       }
       return feature;
     })
@@ -67,7 +67,7 @@ const actions = {
     return SystemService.getAllFeatrues().then(features => {
       context.commit('setFeatureList', features);
       return features;
-    })
+    });
   },
   saveFeature(context, payload) {
     return SystemService.saveFeature(payload).then(res => {
@@ -79,7 +79,7 @@ const actions = {
         context.commit('pushFeatureList', payload);
       }
       context.dispatch('getAllFeatrue');
-    })
+    });
   },
   changeFeatureStatus(context, payload) {
     return SystemService.changeFeatureStatus(payload).then(() => {
@@ -115,8 +115,8 @@ const actions = {
   getAllRoles(context) {
     return SystemService.getAllRoles().then(roles => {
         context.commit('setRolesList', roles);
-      return roles;
-    })
+        return roles;
+      });
   },
   deleteRole(context, id) {
     return SystemService.deleteRole(id).then(() => {

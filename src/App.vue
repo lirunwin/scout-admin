@@ -16,4 +16,8 @@ export default {
 a {
   text-decoration: none;
 }
+
+img {
+  max-width: 100%;
+}
 </style>

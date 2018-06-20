@@ -1,6 +1,6 @@
 export default {
   projectName: '懒虫动动后台管理系统',
-  baseURL:'http://192.168.1.4:8085/',
+  baseURL: 'http://192.168.1.4:8085/',
   // baseURL:'http://192.168.1.4:8085/',
   // baseURL:'http://192.168.0.103:8085/',
   prototype: 'https://mco2d9.axshare.com/',
@@ -49,6 +49,38 @@ export default {
             label: '变更审核失败',
             value: 'COMP_STATUS_CHANGE_CHECK_FAIL',
             sort: '0'
+          }
+        ],
+        tabs: [
+          {
+            label: '基本信息',
+            value: 'info',
+            sort: '0'
+          },
+          {
+            label: '信誉记录',
+            value: 'scoreLog',
+            sort: '1'
+          },
+          {
+            label: '保证金',
+            value: 'depositLog',
+            sort: '2'
+          },
+          {
+            label: '信息变更',
+            value: 'infoChangeLog',
+            sort: '3'
+          },
+          {
+            label: '发起评价',
+            value: 'comments_out',
+            sort: '4'
+          },
+          {
+            label: '收到评价',
+            value: 'comments_in',
+            sort: '5'
           }
         ],
         nature: [{   //企业性质
@@ -315,7 +347,7 @@ export default {
         ]
       }
     },
-    system:{
+    system: {
       feature: {
         tableHeaders: [
           {

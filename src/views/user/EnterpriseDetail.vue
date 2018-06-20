@@ -1,14 +1,69 @@
 <template lang="html">
-  <div>router:</div>
+  <v-container>
+    <toolbar :title="detail.comname"></toolbar>
+    <v-tabs
+      class="mt-3"
+      v-model="tabActive"
+      color="primary"
+      dark
+      grow
+      slider-color="primary darken-2"
+      >
+      <v-tab
+        v-for="(tab, index) in tabs"
+        :key="index"
+      >
+       {{ tab.label }}
+      </v-tab>
+      <v-tab-item>
+        <enterprise-profile :detail="detail"></enterprise-profile>
+      </v-tab-item>
+      <v-tab-item>
+        <score-log></score-log>
+      </v-tab-item>
+      <v-tab-item>
+        <balance-log></balance-log>
+      </v-tab-item>
+      <v-tab-item>
+        <info-change-log></info-change-log>
+      </v-tab-item>
+      <v-tab-item>
+        <comments></comments>
+      </v-tab-item>
+      <v-tab-item>
+        <comments></comments>
+      </v-tab-item>
+    </v-tabs>
+    <pre>{{detail}}</pre>
+  </v-container>
 </template>
 
 <script>
 import Toolbar from '@/components/Toolbar';
-import { mapGetters, mapActions } from 'vuex';
+import EnterpriseProfile from './EnterpriseProfile';
+import ScoreLog from './ScoreLog';
+import BalanceLog from './BalanceLog';
+import InfoChangeLog from './InfoChangeLog';
+import Comments from './Comments';
+
+import {
+  mapGetters,
+  mapActions
+} from 'vuex';
 export default {
   name: 'detail',
+  components: {
+    Toolbar,
+    EnterpriseProfile,
+    ScoreLog,
+    BalanceLog,
+    InfoChangeLog,
+    Comments
+  },
   data: () => ({
-    detail: {
+    text: '1',
+    tabActive: null,
+    detailA: {
       "comd": null,
       "comname": "宇宙武器公司",
       "userid": "22222222",
@@ -40,13 +95,22 @@ export default {
   }),
   computed: {
     ...mapGetters(['enterprises']),
-    enterpriseDetail() {
+    constant() {
+      return this.$config.constant.user.enterprise;
+    },
+    tabs() {
+      return this.constant.tabs;
+    },
+    detail() {
       let detail = this.enterprises.find(enterprise =>
         enterprise.id === this.$route.params.id ||
         enterprise.accountnum === this.$route.params.accountnum
       )
-      return detail;
+      return detail || this.detailA;
     }
+  },
+  methods: {
+    ...mapActions(['getAllEnterprises']),
   }
 }
 </script>
