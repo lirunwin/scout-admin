@@ -1,6 +1,8 @@
 export default {
   projectName: '懒虫动动后台管理系统',
-  baseURL:'http://192.168.1.3:8085/',
+  baseURL:'http://192.168.1.4:8085/',
+  // baseURL:'http://192.168.1.4:8085/',
+  // baseURL:'http://192.168.0.103:8085/',
   prototype: 'https://mco2d9.axshare.com/',
 
   constant: {
@@ -23,7 +25,7 @@ export default {
     },
     user: {
       enterprise: {
-        status: [{
+        status: [{   //企业状态
             label: '新入驻',
             value: 'COMP_STATUS_NEW',
             sort: '0'
@@ -49,6 +51,41 @@ export default {
             sort: '0'
           }
         ],
+        nature: [{   //企业性质
+            label: '国有企业',
+            value: 'COM_NATURE_1',
+            sort: '0'
+          },
+          {
+            label: '集体企业',
+            value: 'COM_NATURE_2',
+            sort: '0'
+          },
+          {
+            label: '有限责任公司',
+            value: 'COM_NATURE_3',
+            sort: '0'
+          },
+          {
+            label: '股份有限公司',
+            value: 'COM_NATURE_4',
+            sort: '0'
+          },
+          {
+            label: '私营企业',
+            value: 'COM_NATURE_5',
+            sort: '0'
+          },
+          {
+            label: '中外合资企业',
+            value: 'COM_NATURE_6',
+            sort: '0'
+          },
+          {
+            label: '外商投资企业',
+            value: 'COM_NATURE_7',
+            sort: '0'
+          }],
         level: [{
             label: '普通客户',
             value: 'level_1',
@@ -86,66 +123,72 @@ export default {
             sort: '0'
           },
         ],
-        tableHeader: [{
-            text: '企业状态',
+        tableHeaders: [{
+            text: '状态',
             align: 'left',
             sortable: false,
-            value: 'name',
-            sort: 0
+            value: 'comstatus',
+            constant: [true, 'status']
           },
           {
-            text: '企业名称',
-            value: 'calories',
+            text: '名称',
+            value: 'comname',
             sortable: false
           },
           {
             text: '账号',
-            value: 'fat',
+            value: 'accountnum',
             sortable: false
           },
           {
-            text: '公司性质',
-            value: 'carbs',
-            sortable: false
+            text: '性质',
+            value: 'nature',
+            sortable: false,
+            constant: [true, 'nature']
           },
           {
-            text: '企业等级',
-            value: 'protein',
+            text: '等级',
+            value: 'businesslevel',
             sortable: false
           },
           {
             text: '联系人',
-            value: 'protein',
+            value: 'contactsname',
             sortable: false
           },
           {
             text: '电话',
-            value: 'cellphone',
+            value: 'contactstel',
             sortable: false
           },
           {
-            text: '所在地区',
-            value: 'location',
+            text: '地区',
+            value: 'provincename',
             sortable: false
           },
           {
             text: '保证金',
-            value: 'deposit',
+            value: 'marginmoney',
             sortable: false
           },
           {
             text: '信誉',
-            value: 'score',
+            value: 'reputation',
             sortable: false
           },
           {
-            text: '发布信息',
-            value: 'posts',
+            text: '兼职',
+            value: 'parttimenum',
             sortable: false
           },
           {
-            text: '创建时间',
-            value: 'createTime',
+            text: '实习',
+            value: 'practicenum',
+            sortable: false
+          },
+          {
+            text: '创建',
+            value: 'createtime',
             sortable: false
           }
         ]
@@ -276,30 +319,52 @@ export default {
       }
     },
     system:{
-      tableHeader: [
-        {
-          text: '模块名称',
-          align: 'left',
-          sortable: false,
-          value: 'funname',
-          sort: 0
-        },
-        {
-          text: '路径',
-          value: 'url',
-          sortable: false
-        } ,
-        {
-          text: '状态',
-          value: 'status',
-          sortable: false
-        },
-        {
-          text: '操作',
-          value: 'action',
-          sortable: false
-        }
-      ]
+      feature: {
+        tableHeaders: [
+          {
+            text: '模块名称',
+            align: 'left',
+            sortable: false,
+            value: 'funname'
+          },
+          {
+            text: '路径',
+            value: 'url',
+            sortable: false
+          },
+          {
+            text: '状态',
+            value: 'status',
+            sortable: false
+          },
+          {
+            text: '操作',
+            value: 'action',
+            sortable: false
+          }
+        ]
+      },
+      role: {
+        tableHeaders: [
+          {
+            text: '角色名',
+            align: 'left',
+            sortable: false,
+            value: 'name',
+            sort: 0
+          },
+          {
+            text: '描述',
+            value: 'remark',
+            sortable: false
+          },
+          {
+            text: '操作',
+            value: 'action',
+            sortable: false
+          }
+        ]
+      }
     }
   }
 };

@@ -1,116 +1,7 @@
 import SystemService from '@/services/SystemService';
 const state = {
-  featureList: [{
-      "id": "1528197070314154",
-      "pid": "0",
-      "funname": "系统管理",
-      "funtype": "FUNTYPE_JZSYSTEM",
-      "funcode": "system",
-      "url": "/ccav",
-      "icon": "lock",
-      "sort": 0,
-      "status": "DATA_DISABLED",
-      "level": 1,
-      "children": [{
-          "id": "1528197244441425",
-          "pid": "1528197070314154",
-          "funname": "功能模块",
-          "funtype": "FUNTYPE_JZSYSTEM",
-          "funcode": "system_function",
-          "url": "/system/feature",
-          "icon": "lock",
-          "sort": 1,
-          "status": "DATA_DISABLED",
-          "level": 2
-        },
-        {
-          "id": "1528197290847263",
-          "pid": "1528197070314154",
-          "funname": "用户角色",
-          "funtype": "FUNTYPE_JZSYSTEM",
-          "funcode": "system_role",
-          "url": "/ccav",
-          "icon": "lock",
-          "sort": 2,
-          "status": "DATA_DISABLED",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "id": "1528197244441425",
-      "pid": "1528197070314154",
-      "funname": "功能模块",
-      "funtype": "FUNTYPE_JZSYSTEM",
-      "funcode": "system_function",
-      "url": "/system/feature",
-      "icon": "lock",
-      "sort": 1,
-      "status": "DATA_DISABLED",
-      "level": 2
-    },
-    {
-      "id": "1528197290847263",
-      "pid": "1528197070314154",
-      "funname": "用户角色",
-      "funtype": "FUNTYPE_JZSYSTEM",
-      "funcode": "system_role",
-      "url": "/ccav",
-      "icon": "lock",
-      "sort": 2,
-      "status": "DATA_DISABLED",
-      "level": 2
-    },
-    {
-      "id": "1529305859771348",
-      "pid": "0",
-      "funname": "招聘信息",
-      "funtype": null,
-      "funcode": "asdsad",
-      "url": "/hire",
-      "icon": "face",
-      "sort": 2,
-      "status": "DATA_DISABLED",
-      "level": 1,
-      "children": [{
-        "id": "1529389754869412",
-        "pid": "1529305859771348",
-        "funname": "测试C",
-        "funtype": null,
-        "funcode": "12321321321",
-        "url": "/test/sdsa",
-        "icon": "",
-        "sort": 7,
-        "status": "DATA_DISABLED",
-        "level": 2
-      }]
-    },
-    {
-      "id": "1529389754869412",
-      "pid": "1529305859771348",
-      "funname": "测试C",
-      "funtype": null,
-      "funcode": "12321321321",
-      "url": "/test/sdsa",
-      "icon": "",
-      "sort": 7,
-      "status": "DATA_DISABLED",
-      "level": 2
-    },
-    {
-      "id": "1529380734829327",
-      "pid": "0",
-      "funname": "test1",
-      "funtype": null,
-      "funcode": "12321321q",
-      "url": "/test",
-      "icon": "",
-      "sort": 3,
-      "status": "DATA_DISABLED",
-      "level": 1
-    }
-  ],
-  sideBar: [],
+  featureList: [],
+  features: [],
   snackbar: {
     isVisible: false,
     y: 'bottom',
@@ -124,24 +15,35 @@ const state = {
     isVisible: false,
     title: '温馨提示',
     text: '',
-  }
+  },
+  roles:[]
 };
 const getters = {
   featureList: state => state.featureList,
   featureParents: state => state.featureList.filter(feature => feature.level === 1),
-  sideBar: state => state.featureList.filter(feature => feature.level === 1).map(parent => {
+  features: state => state.featureList.filter(feature => feature.level === 1).map(parent => {
     let children = state.featureList.filter(child => parent.id === child.pid);
+    let featureFamily = Object.assign({}, parent);
     if (children.length > 0) {
-      parent.children = children;
+      featureFamily.children = children;
     }
-    return parent;
+    return featureFamily;
   }),
   snackbarOptions: state => state.snackbar,
-  confirmOptions: state => state.confirm
+  confirmOptions: state => state.confirm,
+  sortedFeatureList: state => {
+    let features = state.featureList;
+    // return features.sort((fa, fb) => fa.sort > fb.sort);
+    return features;
+  },
+  roles: state => state.roles,
 };
 const mutations = {
   setFeatureList: (state, payload) => state.featureList = payload,
-  pushFeatureList: (state, payload) => state.featureList.push(payload),
+  setRolesList: (state, payload) => state.roles = payload,
+  pushFeatureList: (state, payload) => {l
+    return state.featureList.push(payload)
+  },
   updataFeatureList: (state, payload) => state.featureList = state.featureList
     .map(feature => {
       if (feature.id === payload.id) {
@@ -161,10 +63,10 @@ const mutations = {
     })
 };
 const actions = {
-  getAllFeatrue(context) {
-    return SystemService.getAllFeatrue().then(featureList => {
-      context.commit('setFeatureList', featureList);
-      return featureList;
+  getAllFeatrues(context) {
+    return SystemService.getAllFeatrues().then(features => {
+      context.commit('setFeatureList', features);
+      return features;
     })
   },
   saveFeature(context, payload) {
@@ -176,6 +78,7 @@ const actions = {
         payload.pid.length > 0 ? payload.level = 2 : payload.level = 1;
         context.commit('pushFeatureList', payload);
       }
+      context.dispatch('getAllFeatrue');
     })
   },
   changeFeatureStatus(context, payload) {
@@ -208,7 +111,24 @@ const actions = {
     let confirm = context.getters.confirmOptions;
     confirm.isVisible = false;
     context.commit('updataConfirm', confirm);
+  },
+  getAllRoles(context) {
+    return SystemService.getAllRoles().then(roles => {
+        context.commit('setRolesList', roles);
+      return roles;
+    })
+  },
+  deleteRole(context, id) {
+    return SystemService.deleteRole(id).then(() => {
+      console.log('删除成功');
+    });
+  },
+  saveRole(context, role) {
+    return SystemService.saveRole(role).then(() => {
+      console.log('saved');
+    });
   }
+
 };
 
 export default {

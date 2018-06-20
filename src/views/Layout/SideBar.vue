@@ -46,7 +46,7 @@
           </v-list-tile>
         </template>
       </v-list>
-      <pre class="caption">{{sideBar}}</pre>
+      <pre class="caption"></pre>
   </v-navigation-drawer>
 </template>
 
@@ -67,7 +67,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      sideBar: 'sideBar'
+      sideBar: 'features',
+      featureList: 'featureList'
     })
   },
   watch: {
@@ -82,10 +83,10 @@ export default {
     handleClick() {
       console.log('sidebar clicked')
     },
-    ...mapActions(['getAllFeatrue'])
+    ...mapActions(['getAllFeatrues'])
   },
   mounted() {
-    this.getAllFeatrue();
+    this.getAllFeatrues();
   }
 }
 </script>

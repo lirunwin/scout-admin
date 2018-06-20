@@ -8,7 +8,7 @@ let instance = axios.create({
 });
 instance.interceptors.response.use(response => {
   // TODO: some auth stuff
-
+  console.log(response)
   return response.data.data;
 }, error => {
   console.log({error});

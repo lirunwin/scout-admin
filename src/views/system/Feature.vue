@@ -116,8 +116,8 @@
   </v-container>
   <v-container fluid
     class="py-0">
-    <v-data-table :headers="constant.tableHeader"
-      :items="featureList"
+    <v-data-table :headers="constant.tableHeaders"
+      :items="sortedFeatureList"
       no-data-text="未查询到数据..."
       no-results-text="无筛选结果"
       rows-per-page-text="每页显示"
@@ -128,28 +128,28 @@
         slot-scope="props"
         v-if="props.item.status !== dataStatus.deprecated[0]">
         <td
-          v-for="index of constant.tableHeader.length"
+          v-for="index of constant.tableHeaders.length"
           :key="index"
           :class="{
-            'justify-start layout px-0': constant.tableHeader[index-1].value === 'action'
+            'justify-start layout px-0': constant.tableHeaders[index-1].value === 'action'
           }"
         >
-          <template v-if="constant.tableHeader[index-1].value === 'status'">
-            {{props.item[constant.tableHeader[index-1].value] === dataStatus.on[0]}}
+        <template v-if="constant.tableHeaders[index-1].value === 'status'">
+            <!-- {{props.item[constant.tableHeaders[index-1].value] === dataStatus.on[0]}} -->
             <v-switch
               @change="switchFeatureStatus(props.item)"
-              v-model="props.item[constant.tableHeader[index-1].value]"
+              v-model="props.item[constant.tableHeaders[index-1].value]"
               hide-details
               :true-value="dataStatus.on[0]"
               :false-value="dataStatus.off[0]"
               color="primary">
             </v-switch>
           </template>
-      <template v-else-if="constant.tableHeader[index-1].value === 'funname' && props.item.level > 1">
-            <span class="pl-3 pr-1">├─</span>{{ props.item[constant.tableHeader[index-1].value] || '-'}}
+      <template v-else-if="constant.tableHeaders[index-1].value === 'funname' && props.item.level > 1">
+            <span class="pl-3 pr-1">├─</span>{{ props.item[constant.tableHeaders[index-1].value] || '-'}}
           </template>
-      <template v-else-if="constant.tableHeader[index-1].value !== 'action'">
-            {{ props.item[constant.tableHeader[index-1].value] || '-'}}
+      <template v-else-if="constant.tableHeaders[index-1].value !== 'action'">
+            {{ props.item[constant.tableHeaders[index-1].value] || '-'}}
           </template>
       <template v-else>
             <v-tooltip bottom>
@@ -174,31 +174,26 @@
       </td>
       </template>
     </v-data-table>
-    <pre>{{feature}}</pre>
   </v-container>
 </div>
 </template>
 <script>
-import {
-  mapGetters,
-  mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "feature",
   data() {
     return {
       dialog: false,
-      constant: this.$config.constant.system,
       feature: {
         id: "",
         pid: "0",
         funname: "",
         funcode: "",
         url: "",
-        icon: "",
         sort: "0",
         level: "1",
-        status: ""
+        status: "",
+        icon: 'face'
       },
       rules: {
         funname: [
@@ -216,8 +211,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['featureList', 'featureParents', 'dataStatus']),
-
+    ...mapGetters(['featureList', 'featureParents', 'dataStatus', 'sortedFeatureList']),
+    constant() {
+      return this.$config.constant.system.feature;
+    },
     dataStatus() {
       const statuses = this.$config.constant.share.data;
       let statusArray = Object.entries(statuses);
@@ -281,9 +278,9 @@ export default {
         funname: "",
         funcode: "",
         url: "",
-        icon: "",
         sort: "0",
         level: "1",
+        icon: 'face',
         status: this.dataStatus.on[0]
       }
     },

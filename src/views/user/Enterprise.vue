@@ -40,7 +40,7 @@
           label="企业等级"
         ></v-select>
       </v-flex>
-      <v-flex xs12 md4 class="pb-2">
+      <v-flex xs12 md4>
         <v-text-field
           name="name"
           label="关键词"
@@ -60,10 +60,10 @@
       </v-flex>
     </v-layout>
   </v-container>
-  <v-container fluid class="py-0">
+  <v-container fluid class="py-0" v-if="enterprises">
     <v-data-table
-      :headers="constant.tableHeader"
-      :items="enterpriseList"
+      :headers="tableHeaders"
+      :items="enterprises"
       no-data-text="未查询到数据..."
       no-results-text="无筛选结果"
       rows-per-page-text="每页显示"
@@ -72,16 +72,21 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td v-for="index of constant.tableHeader.length" :key="index">{{ props.item[constant.tableHeader[index-1].value] || '-'}}</td>
+        <td v-for="index of tableHeaders.length" :key="index">
+          <template v-if="tableHeaders[index-1].constant && tableHeaders[index-1].constant[0]">
+            {{ getStatusLabelByConstVal(props.item[tableHeaders[index-1].value],tableHeaders[index-1].constant[1]) }}
+          </template>
+          <template v-else>
+            {{ props.item[tableHeaders[index-1].value] }}
+          </template>
+        </td>
       </template>
     </v-data-table>
   </v-container>
 </div>
 </template>
 <script>
-import {
-  mapGetters
-} from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'enterprise',
   data() {
@@ -90,19 +95,37 @@ export default {
       level: '',
       orderBy: '',
       keyword: '',
-      dialog: false,
-      constant: this.$config.constant.user.enterprise
+      dialog: false
     }
   },
   computed: {
-    ...mapGetters({
-      enterpriseList: 'enterpriseList'
-    })
+    ...mapGetters(['enterprises']),
+    constant() {
+      return this.$config.constant.user.enterprise
+    },
+    tableHeaders() {
+      return this.constant.tableHeaders;
+    }
   },
   methods: {
+    ...mapActions(['getAllEnterprises']),
     addPermission() {
       this.dialog = true
+    },
+    getStatusLabelByConstVal(val, property) {
+      let constantObj = this.constant[property];
+      if (!constantObj) {
+        return val
+      }
+      let constant = constantObj.find(constant => constant.value === val);
+      return constant.label || val;
     }
+  },
+  mounted() {
+    this.getAllEnterprises({
+      pageindex: 1,
+      pagesize: 100
+    });
   }
 }
 </script>

@@ -5,7 +5,6 @@ import Login from '@/views/Login';
 import Permission from '@/views/Permission';
 import UserPages from './user';
 import SystemPages from './system';
-import Feature from '@/views/system/Feature';
 Vue.use(Router)
 
 export default new Router({
@@ -13,8 +12,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Feature',
-      component: Feature
+      redirect: { name: 'Enterprise' }
     },
     {
       path: '/login',
@@ -27,7 +25,7 @@ export default new Router({
     },
     {
       path: '/permission',
-      name: 'permission',
+      name: 'Permission',
       component: Permission
     },
     ...UserPages,
