@@ -110,7 +110,7 @@ export default {
         paramlike: '',
         ordercondition: '',
         pageindex: 1,
-        pagesize: 100
+        pagesize: 1
       }
     }
   },
