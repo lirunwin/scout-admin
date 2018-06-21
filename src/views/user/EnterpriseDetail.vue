@@ -1,5 +1,5 @@
 <template lang="html">
-  <v-container>
+  <v-container fluid>
     <toolbar :title="detail.comname"></toolbar>
     <v-tabs
       class="mt-3"
@@ -103,8 +103,7 @@ export default {
     },
     detail() {
       let detail = this.enterprises.find(enterprise =>
-        enterprise.id === this.$route.params.id ||
-        enterprise.accountnum === this.$route.params.accountnum
+        enterprise.comid === this.$route.params.id
       )
       return detail || this.detailA;
     }

@@ -14,6 +14,7 @@ let getContantValue = (val, property) => {
 export default {
   enterprise: {
     enterpriseNature: (val) => getContantValue(val, 'nature'),
-    enterpriseStatus: (val) => getContantValue(val, 'status')
+    enterpriseStatus: (val) => getContantValue(val, 'status'),
+    enterpriseCheckStatus: (val) => getConstantValue(val, 'checkStatus')
   }
 };

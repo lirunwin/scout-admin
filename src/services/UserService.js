@@ -8,6 +8,12 @@ export default {
     //
     // logout: () => Api.get('loginOut'),
 
-    getAllEnterprises: (data) => Api.post('companyManagement/getCompanyDetailsInfoForList', data)
+    getAllEnterprises: (data) => Api.post('companyManagement/getCompanyDetailsInfoForList', data),
+
+    getScoreLog: (data) => Api.post('companyManagement/getCompanyReputationRecordInfo', data),
+
+    getBalanceLog: (data) => Api.post('companyManagement/getCompanyFinanceInfo', data),
+
+    checkEnterprise: (data) => Api.post('companyManagement/checkCompany', data)
 
   };

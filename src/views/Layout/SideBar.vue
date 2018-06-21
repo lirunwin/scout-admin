@@ -51,10 +51,7 @@
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapActions
-} from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data: () => ({
     drawer: null
@@ -68,7 +65,8 @@ export default {
   computed: {
     ...mapGetters({
       sideBar: 'features',
-      featureList: 'featureList'
+      featureList: 'featureList',
+      cities: 'cities'
     })
   },
   watch: {
@@ -83,10 +81,16 @@ export default {
     handleClick() {
       console.log('sidebar clicked')
     },
-    ...mapActions(['getAllFeatrues'])
+    ...mapActions(['getAllFeatrues', 'getCities'])
   },
   mounted() {
-    this.getAllFeatrues();
+    this.getAllFeatrues()
+      .then(res => {
+
+      });
+    this.getCities({
+      id: "0"
+    });
   }
 }
 </script>

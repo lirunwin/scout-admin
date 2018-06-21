@@ -25,6 +25,7 @@ import '@/assets/scss/style.scss';
 Vue.config.productionTip = false;
 Vue.filter('enterpriseNature', filters.enterprise.enterpriseNature);
 Vue.filter('enterpriseStatus', filters.enterprise.enterpriseStatus);
+Vue.filter('enterpriseCheckStatus', filters.enterprise.enterpriseCheckStatus);
 new Vue({
   router,
   store,

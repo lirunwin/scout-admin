@@ -79,7 +79,7 @@
             {{ getStatusLabelByConstVal(props.item[tableHeaders[index-1].value],tableHeaders[index-1].constant[1]) }}
           </template>
           <template v-else-if="tableHeaders[index-1].detail">
-            <router-link :to="{ name: 'EnterpriseDetail', params: { id: props.item.id || 0, accountnum: props.item.accountnum  } }">
+            <router-link :to="{ name: 'EnterpriseDetail', params: { id: props.item.comid || '#' } }">
                 {{ props.item[tableHeaders[index-1].value] }}
             </router-link>
           </template>
@@ -139,7 +139,7 @@ export default {
     },
     getDefaultOrderBy() {
       let defaultOrder = this.constant.orderBy.find(order => order.default === true);
-      return defaultOrder.value;
+      return defaultOrder.value || 'createtime';
     },
     resetSerach() {
       this.filter = {

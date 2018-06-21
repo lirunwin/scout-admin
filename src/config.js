@@ -1,7 +1,7 @@
 export default {
   projectName: '懒虫动动后台管理系统',
-  baseURL: 'http://192.168.1.4:8085/',
-  // baseURL:'http://192.168.1.4:8085/',
+  // baseURL: 'http://192.168.1.3:8085/',
+  baseURL:'http://192.168.1.4:8080/',
   // baseURL:'http://192.168.0.103:8085/',
   prototype: 'https://mco2d9.axshare.com/',
 
@@ -25,7 +25,7 @@ export default {
     },
     user: {
       enterprise: {
-        status: [{   //企业状态
+        status: [{ //企业状态
             label: '新入驻',
             value: 'COMP_STATUS_NEW',
             sort: '0'
@@ -51,8 +51,20 @@ export default {
             sort: '0'
           }
         ],
-        tabs: [
+        checkStatus: [{
+            label: '审核通过',
+            value: 'CHECK_OK',
+            sort: '0',
+            alias: 'pass'
+          },
           {
+            label: '审核失败',
+            value: 'CHECK_FAIL',
+            sort: '0',
+            alias: 'reject'
+          }
+        ],
+        tabs: [{
             label: '基本信息',
             value: 'info',
             sort: '0'
@@ -83,7 +95,7 @@ export default {
             sort: '5'
           }
         ],
-        nature: [{   //企业性质
+        nature: [{ //企业性质
             label: '国有企业',
             value: 'COM_NATURE_1',
             sort: '0'
@@ -117,7 +129,8 @@ export default {
             label: '外商投资企业',
             value: 'COM_NATURE_7',
             sort: '0'
-          }],
+          }
+        ],
         level: [{
             label: '普通客户',
             value: 'COM_LEVEL_GENERAL',
@@ -151,7 +164,7 @@ export default {
             sort: '0'
           },
         ],
-        tableHeaders: [{
+        tableHeaders: [{ // list tableHeader
             text: '状态',
             align: 'left',
             sortable: false,
@@ -220,7 +233,71 @@ export default {
             value: 'createtime',
             sortable: false
           }
-        ]
+        ],
+        log: {
+          score: {
+            tableHeaders: [{ // list tableHeader
+                text: '信誉值',
+                align: 'left',
+                sortable: false,
+                value: 'comstatus',
+              },
+              {
+                text: '类型',
+                align: 'left',
+                sortable: false,
+                value: 'comstatus',
+                constant: [true, 'status']
+              },
+              {
+                text: '时间',
+                align: 'left',
+                sortable: false,
+                value: 'comstatus',
+                constant: [true, 'status']
+              },
+              {
+                text: '说明',
+                align: 'left',
+                sortable: false,
+                value: 'comstatus',
+                constant: [true, 'status']
+              }
+            ],
+            orderBy: []
+          },
+          balance: {
+            tableHeaders: [{ // list tableHeader
+                text: '金额',
+                align: 'left',
+                sortable: false,
+                value: 'comstatus',
+              },
+              {
+                text: '类型',
+                align: 'left',
+                sortable: false,
+                value: 'comstatus',
+                constant: [true, 'status']
+              },
+              {
+                text: '时间',
+                align: 'left',
+                sortable: false,
+                value: 'comstatus',
+                constant: [true, 'status']
+              },
+              {
+                text: '说明',
+                align: 'left',
+                sortable: false,
+                value: 'comstatus',
+                constant: [true, 'status']
+              }
+            ],
+            orderBy: []
+          },
+        }
       },
       common: {
         type: [{
@@ -250,8 +327,7 @@ export default {
             sort: '0'
           },
         ],
-        orderBy: [
-          {
+        orderBy: [{
             label: '最新创建',
             value: 'STUDENT1',
             sort: '0'
@@ -349,8 +425,7 @@ export default {
     },
     system: {
       feature: {
-        tableHeaders: [
-          {
+        tableHeaders: [{
             text: '模块名称',
             align: 'left',
             sortable: false,
@@ -374,8 +449,7 @@ export default {
         ]
       },
       role: {
-        tableHeaders: [
-          {
+        tableHeaders: [{
             text: '角色名',
             align: 'left',
             sortable: false,
