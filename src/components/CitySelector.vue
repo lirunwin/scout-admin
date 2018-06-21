@@ -4,7 +4,7 @@
       <v-flex xs12 sm4>
         <v-select
           :items="province"
-          v-model="value.province"
+          v-model="location.province"
           label="省"
           item-text="areaname"
           item-value="id"
@@ -17,7 +17,7 @@
       <v-flex xs12 sm4>
         <v-select
           :items="city"
-          v-model="value.city"
+          v-model="location.city"
           label="市"
           item-text="areaname"
           item-value="id"
@@ -30,7 +30,7 @@
       <v-flex xs12 sm4>
         <v-select
           :items="county"
-          v-model="value.county"
+          v-model="location.county"
           label="区县"
           item-text="areaname"
           item-value="id"
@@ -47,7 +47,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  props: ['value'],
+  // props: ['location'],
   data: () => ({
     items: [],
     location: {
@@ -64,7 +64,7 @@ export default {
       return this.cities.filter(item => item.pid === '0');
     },
     city() {
-      let id = this.value.province;
+      let id = this.location.province;
       if (id === '0') {
         return []
       }
@@ -77,7 +77,7 @@ export default {
       return city;
     },
     county() {
-      let id = this.value.city;
+      let id = this.location.city;
       if (id === '0') {
         return []
       }
@@ -94,12 +94,12 @@ export default {
     ...mapActions(['getCities']),
     onProvinceChange() {
       this.onChange();
-      this.value.city = '0';
-      this.value.county = '0';
+      this.location.city = '0';
+      this.location.county = '0';
     },
     onCityChange() {
       this.onChange();
-      this.value.county = '0';
+      this.location.county = '0';
     },
     onCountyChange() {
       this.onChange();

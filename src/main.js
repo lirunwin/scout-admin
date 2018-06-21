@@ -23,9 +23,10 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import 'vuetify/dist/vuetify.min.css';
 import '@/assets/scss/style.scss';
 Vue.config.productionTip = false;
-Vue.filter('enterpriseNature', filters.enterprise.enterpriseNature);
-Vue.filter('enterpriseStatus', filters.enterprise.enterpriseStatus);
-Vue.filter('enterpriseCheckStatus', filters.enterprise.enterpriseCheckStatus);
+Vue.filter('enterpriseNature', filters.enterprise.nature);
+Vue.filter('enterpriseStatus', filters.enterprise.status);
+Vue.filter('enterpriseCheckStatus', filters.enterprise.checkStatus);
+Vue.filter('enterpriseLogScoreFilterType', filters.enterprise.logScoreFilterType);
 new Vue({
   router,
   store,

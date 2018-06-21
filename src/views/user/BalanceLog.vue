@@ -1,8 +1,20 @@
 <template lang="html">
   <v-container
-    v-if="tableHeaders.length"
+    v-if="tableHeaders"
     fluid
     >
+    <v-layout row wrap>
+      <v-flex xs4>
+        <v-select
+          :items="filters"
+          v-model="filter.type"
+          item-text="label"
+          item-value="value"
+          label="筛选条件"
+          @change="query"
+        ></v-select>
+      </v-flex>
+    </v-layout>
     <v-data-table
       :headers="tableHeaders"
       :items="balanceLog"
@@ -16,12 +28,7 @@
       <template slot="items" slot-scope="props">
         <td v-for="index of tableHeaders.length" :key="index">
           <template v-if="tableHeaders[index-1].constant && tableHeaders[index-1].constant[0]">
-1
-          </template>
-          <template v-else-if="tableHeaders[index-1].detail">
-            <router-link :to="{ name: 'EnterpriseDetail', params: { id: props.item.comid || 0, accountnum: props.item.accountnum  } }">
-                {{ props.item[tableHeaders[index-1].value] }}
-            </router-link>
+              {{ props.item[tableHeaders[index-1].value] | enterpriseLogScoreFilterType }}
           </template>
           <template v-else>
             {{ props.item[tableHeaders[index-1].value] }}
@@ -35,15 +42,18 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   data: () => ({
-
+    filter: {}
   }),
   computed: {
-    ...mapGetters(['balanceLog']),
+    ...mapGetters(['balanceLog', 'getAllEnterprises']),
     constant() {
       return this.$config.constant.user.enterprise;
     },
     tableHeaders() {
-      return this.constant.log.balance.tableHeaders;
+      return this.constant.logBalanceTableHeaders;
+    },
+    filters() {
+      return this.constant.logBanlanceFilters;
     }
   },
   methods: {
@@ -56,6 +66,9 @@ export default {
         return 'createtime';
       }
     },
+    query() {
+
+    }
   },
   mounted() {
     this.getBalanceLog({

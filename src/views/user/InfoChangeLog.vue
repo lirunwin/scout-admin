@@ -3,5 +3,18 @@
 </template>
 
 <script>
-export default {}
+import { mapGetters, mapActions } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters(['infoChangeLog']),
+  },
+  methods: {
+    ...mapActions(['getInfoChangeLog'])
+  },
+  mounted() {
+    this.getInfoChangeLog({
+      comid: '1528708466833525'
+    })
+  }
+}
 </script>

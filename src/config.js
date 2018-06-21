@@ -1,7 +1,7 @@
 export default {
   projectName: '懒虫动动后台管理系统',
   // baseURL: 'http://192.168.1.3:8085/',
-  baseURL:'http://192.168.1.4:8080/',
+  baseURL: 'http://192.168.1.4:8080/',
   // baseURL:'http://192.168.0.103:8085/',
   prototype: 'https://mco2d9.axshare.com/',
 
@@ -74,26 +74,26 @@ export default {
             value: 'scoreLog',
             sort: '1'
           },
-          {
-            label: '保证金',
-            value: 'depositLog',
-            sort: '2'
-          },
+          // {
+          //   label: '账户余额',
+          //   value: 'balanceLog',
+          //   sort: '2'
+          // },
           {
             label: '信息变更',
             value: 'infoChangeLog',
             sort: '3'
           },
-          {
-            label: '发起评价',
-            value: 'comments_out',
-            sort: '4'
-          },
-          {
-            label: '收到评价',
-            value: 'comments_in',
-            sort: '5'
-          }
+          // {
+          //   label: '发起评价',
+          //   value: 'comments_out',
+          //   sort: '4'
+          // },
+          // {
+          //   label: '收到评价',
+          //   value: 'comments_in',
+          //   sort: '5'
+          // }
         ],
         nature: [{ //企业性质
             label: '国有企业',
@@ -234,70 +234,92 @@ export default {
             sortable: false
           }
         ],
-        log: {
-          score: {
-            tableHeaders: [{ // list tableHeader
-                text: '信誉值',
-                align: 'left',
-                sortable: false,
-                value: 'comstatus',
-              },
-              {
-                text: '类型',
-                align: 'left',
-                sortable: false,
-                value: 'comstatus',
-                constant: [true, 'status']
-              },
-              {
-                text: '时间',
-                align: 'left',
-                sortable: false,
-                value: 'comstatus',
-                constant: [true, 'status']
-              },
-              {
-                text: '说明',
-                align: 'left',
-                sortable: false,
-                value: 'comstatus',
-                constant: [true, 'status']
-              }
-            ],
-            orderBy: []
+        logScoreTableHeaders: [{
+            text: '信誉值',
+            align: 'left',
+            sortable: false,
+            value: 'number',
           },
-          balance: {
-            tableHeaders: [{ // list tableHeader
-                text: '金额',
-                align: 'left',
-                sortable: false,
-                value: 'comstatus',
-              },
-              {
-                text: '类型',
-                align: 'left',
-                sortable: false,
-                value: 'comstatus',
-                constant: [true, 'status']
-              },
-              {
-                text: '时间',
-                align: 'left',
-                sortable: false,
-                value: 'comstatus',
-                constant: [true, 'status']
-              },
-              {
-                text: '说明',
-                align: 'left',
-                sortable: false,
-                value: 'comstatus',
-                constant: [true, 'status']
-              }
-            ],
-            orderBy: []
+          {
+            text: '类型',
+            align: 'left',
+            sortable: false,
+            value: 'reputationtype',
+            constant: [true, 'enterpriseLogScoreFilterType']
           },
-        }
+          {
+            text: '时间',
+            align: 'left',
+            sortable: false,
+            value: 'createtime',
+          },
+          {
+            text: '说明',
+            align: 'left',
+            sortable: false,
+            value: 'directions',
+          }
+        ],
+        logScoreFilters: [{
+            label: '全部类型',
+            value: '',
+            default: true
+          },
+          {
+            label: '用户评价',
+            value: 'EVALUATION',
+          },
+          {
+            label: '推迟兼职时间',
+            value: 'EXTENSION_START_TIME',
+          },
+          {
+            label: '提前结束兼职',
+            value: 'BEFOR_END_TIME',
+          },
+          {
+            label: '募人后取消',
+            value: 'CANCEL_TASK',
+          },
+          {
+            label: '苛扣工资',
+            value: 'DEDUCTION_WAGES',
+          },
+          {
+            label: '拖欠工资',
+            value: 'ARREARS_WAGES',
+          },
+          {
+            label: '按时结算',
+            value: 'ONPAY_WAGES',
+          }
+        ],
+        logBalanceTableHeaders: [{
+            text: '金额',
+            align: 'left',
+            sortable: false,
+            value: 'amount',
+          },
+          {
+            text: '类型',
+            align: 'left',
+            sortable: false,
+            value: 'financetype',
+            constant: [true, 'status']
+          },
+          {
+            text: '时间',
+            align: 'left',
+            sortable: false,
+            value: 'createtime'
+          },
+          {
+            text: '说明',
+            align: 'left',
+            sortable: false,
+            value: 'directions'
+          }
+        ],
       },
       common: {
         type: [{

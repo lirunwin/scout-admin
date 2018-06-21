@@ -35,8 +35,12 @@ const actions = {
       //updata enterprise list
       return res
     });
+  },
+  getInfoChangeLog(context, payload) {
+    return UserService.getInfoChangeLog(payload).then((res) => {
+      return res
+    });
   }
-
 };
 
 export default {

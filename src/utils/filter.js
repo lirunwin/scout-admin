@@ -1,6 +1,6 @@
 import config from '@/config';
 
-let getContantValue = (val, property) => {
+let getConstantValue = (val, property) => {
   let constants = null;
   try {
     constants = config.constant.user.enterprise[property];
@@ -13,8 +13,9 @@ let getContantValue = (val, property) => {
 
 export default {
   enterprise: {
-    enterpriseNature: (val) => getContantValue(val, 'nature'),
-    enterpriseStatus: (val) => getContantValue(val, 'status'),
-    enterpriseCheckStatus: (val) => getConstantValue(val, 'checkStatus')
+    nature: (val) => getConstantValue(val, 'nature'),
+    status: (val) => getConstantValue(val, 'status'),
+    checkStatus: (val) => getConstantValue(val, 'checkStatus'),
+    logScoreFilterType: (val) => getConstantValue(val, 'logScoreFilters')
   }
 };

@@ -117,7 +117,7 @@
                 <v-flex xs12>
                   <v-layout row wrap>
                     <v-flex xs12>
-                      <city-selector v-model="location" @onChange="locationPicked"></city-selector>
+                      <city-selector @onChange="locationPicked"></city-selector>
                     </v-flex>
                     <v-flex xs12>
                       <v-text-field
@@ -218,7 +218,7 @@ export default {
   components: { CitySelector, ImageUploader },
   props: ['detail'],
   data: () => ({
-    dialogForForm: true,
+    dialogForForm: false,
     dialogForCheck: false,
     location: {},
     checkInfo: {

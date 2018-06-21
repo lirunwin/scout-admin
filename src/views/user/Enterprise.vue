@@ -60,7 +60,6 @@
       <v-flex style="flex:0" class="pb-2 px-0"><v-btn color="primary" class="mb-3" @click="search">搜索</v-btn></v-flex>
       <v-flex style="flex:0" class="pb-2 px-0"><v-btn color="primary lighten-1" class="mb-3" @click="resetSerach">重置</v-btn></v-flex>
     </v-layout>
-    {{filter}}
   </v-container>
   <v-container fluid class="py-0" v-if="enterprises">
     <v-data-table
@@ -90,6 +89,9 @@
       </template>
     </v-data-table>
   </v-container>
+  <pre>
+    {{enterprises}}
+  </pre>
 </div>
 </template>
 <script>
