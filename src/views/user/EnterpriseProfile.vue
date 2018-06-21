@@ -2,7 +2,7 @@
   <v-container class="enterprise" v-if="detail" fluid>
     <v-layout row wrap class="pb-3">
       <v-btn color="primary" @click="dialogForForm = !dialogForForm">修改</v-btn>
-      <v-btn color="primary" @click="dialogForCheck = !dialogForCheck">审核</v-btn>
+      <v-btn color="primary" @click="dialogForReview = !dialogForReview">审核</v-btn>
     </v-layout>
     <v-layout row wrap>
       <v-flex xs7>
@@ -161,7 +161,7 @@
       </v-dialog>
     </v-layout>
     <v-layout row justify-center>
-      <v-dialog v-model="dialogForCheck" persistent max-width="500px">
+      <v-dialog v-model="dialogForReview" persistent max-width="500px">
         <v-card>
           <v-card-title>
             <span class="headline">审核</span>
@@ -169,7 +169,7 @@
           <v-card-text>
             <v-container grid-list-md class="py-0">
               <v-layout>
-                <v-radio-group v-model="checkInfo.checkstatus">
+                <v-radio-group v-model="review.checkstatus">
                   <v-layout row wrap>
                     <v-flex xs4>
                       <v-radio
@@ -193,7 +193,7 @@
                   <v-text-field
                     label="审核内容"
                     multi-line
-                    v-model="checkInfo.remark"
+                    v-model="review.remark"
                   ></v-text-field>
                 </v-flex>
               </v-layout>
@@ -201,8 +201,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.native="dialogForCheck = false">关闭</v-btn>
-            <v-btn color="primary" @click.native="onCheckEnterprise">确定</v-btn>
+            <v-btn color="primary" @click.native="dialogForReview = false">关闭</v-btn>
+            <v-btn color="primary" @click.native="onReviewEnterprise">确定</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -213,15 +213,20 @@
 <script>
 import CitySelector from '@/components/CitySelector';
 import ImageUploader from '@/components/ImageUploader';
-import { mapActions } from 'vuex';
+import {
+  mapActions
+} from 'vuex';
 export default {
-  components: { CitySelector, ImageUploader },
+  components: {
+    CitySelector,
+    ImageUploader
+  },
   props: ['detail'],
   data: () => ({
     dialogForForm: false,
-    dialogForCheck: false,
+    dialogForReview: false,
     location: {},
-    checkInfo: {
+    review: {
       checkstatus: false,
       remark: ''
     },
@@ -235,7 +240,10 @@ export default {
       let constants = this.constant.checkStatus;
       let pass = constants.find(constant => constant.alias === 'pass');
       let reject = constants.find(constant => constant.alias === 'reject');
-      return { pass, reject }
+      return {
+        pass,
+        reject
+      }
     }
   },
   mounted() {
@@ -247,10 +255,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['checkEnterprise']),
-    onCheckEnterprise() {
-      this.checkInfo.id = this.$route.params.id;
-      this.checkEnterprise(this.checkInfo);
+    ...mapActions(['reviewEnterprise']),
+    onReviewEnterprise() {
+      this.review.id = this.$route.params.id;
+      this.reviewEnterprise(this.review);
     },
     locationPicked(location) {
       this.detailForm.provinceid = location.province;
