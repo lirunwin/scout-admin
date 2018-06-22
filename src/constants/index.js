@@ -1,4 +1,4 @@
-import basic from './basic'
+import basic from './basic';
 export default {
   global: {
     dataStatus: [{
@@ -16,11 +16,11 @@ export default {
       {
         label: '删除',
         value: 'DATA_DELETED',
-        name:'deprecated',
+        name: 'deprecated',
         sort: '2'
       }
     ],
-    tablePagination: [5,10,25,{"text":"全部","value":-1}]
+    tablePagination: [3,10,25,{'text': '全部','value': -1}]
   },
   basic
-}
+};

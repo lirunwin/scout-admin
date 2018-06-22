@@ -7,11 +7,21 @@
       @click="newTag">
       新增标签
     </v-btn>
+    <v-tooltip
+      bottom
+      v-show="selectedTags.length"
+      >
+      <v-btn slot="activator" icon class="mt-2 mb-0" @click="multiDeprecate">
+        <v-icon color="error">delete</v-icon>
+      </v-btn>
+      <span>批量废弃{{selectedTags.length}}个项目</span>
+    </v-tooltip>
     <data-filter
       :type="tagTypes"
       keyword
       v-model="filter"
-    ></data-filter>
+      @search="search"
+    ></data-filter> {{filter}} {{pagination}}
     <v-dialog v-model="dialog"
       persistent
       max-width="400px">
@@ -20,7 +30,7 @@
           <span class="headline">{{!tag.id? '新增评分标签' : '修改评分标签'}}</span>
           <v-spacer></v-spacer>
           <v-btn color="secondary darken-3"
-            @click="dialog = !dialog"
+            @click="closeDialog"
             icon>
             <v-icon>close</v-icon>
           </v-btn>
@@ -94,34 +104,98 @@
     </v-dialog>
     <v-container fluid class="py-0">
       <v-data-table
+        v-model="selectedTags"
         :headers="tableHeaders"
-        :items="scoreTags"
+        :items="availableScoreTags"
         no-data-text="未查询到数据..."
         no-results-text="无筛选结果"
-        rows-per-page-text="每页显示"        
+        :rows-per-page-items= "$constant.global.tablePagination"
+        rows-per-page-text="每页显示"
         disable-initial-sort
         class="elevation-1"
         :pagination.sync="pagination"
-      >
+        select-all
+        :loading="tableLoading"
+        >
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th class="px-1">
+              <v-checkbox
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+                color="primary"
+                hide-details
+                @click="toggleSelectAll"
+              ></v-checkbox>
+            </th>
+            <th
+              v-for="header in props.headers"
+              :key="header.text"
+              style="text-align:left"
+            >
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
         <template slot="items" slot-scope="props">
-          <td v-for="index of tableHeaders.length" :key="index">
-            <template v-if="tableHeaders[index-1].constant && tableHeaders[index-1].constant[0]">
-              {{ props.item[tableHeaders[index-1].value] | constantHelper(tableHeaders[index-1].constant[1])}}
-            </template>
-            <template v-else>
-              {{ props.item[tableHeaders[index-1].value] }}
-            </template>
-          </td>
+          <tr :active="props.selected" @click.stop="props.selected = !props.selected">
+            <td class="px-1">
+              <v-checkbox
+                :input-value="props.selected"
+                color="primary"
+                hide-details
+              ></v-checkbox>
+            </td>
+            <td v-for="index of tableHeaders.length"
+              :key="index"
+              :class="{
+                'justify-start layout px-0': tableHeaders[index-1].action
+              }"
+              >
+              <template v-if="tableHeaders[index-1].action">
+                <v-tooltip bottom>
+                  <v-btn slot="activator" icon class="mx-0" @click.stop="editTag(props.item)">
+                    <v-icon color="primary">edit</v-icon>
+                  </v-btn>
+                  <span>修改</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <v-btn slot="activator" icon class="mx-0" @click.stop="deprecateItem(props.item)">
+                    <v-icon color="error">delete</v-icon>
+                  </v-btn>
+                  <span>废弃</span>
+                </v-tooltip>
+                <v-switch color="primary"
+                  @click.stop="switchStatus(props.item)"
+                  hide-details
+                  :true-value="status.on.value"
+                  :false-value="status.off.value"
+                  class="pl-2"
+                  style="flex-grow: 0"
+                  :input-value="props.item[tableHeaders[index-1].value]">
+                </v-switch>
+              </template>
+              <template v-else-if="tableHeaders[index-1].constant && tableHeaders[index-1].constant[0]">
+                {{ props.item[tableHeaders[index-1].value] | constantHelper(tableHeaders[index-1].constant[1])}}
+              </template>
+              <template v-else>
+                {{ props.item[tableHeaders[index-1].value] }}
+              </template>
+            </td>
+          </tr>
         </template>
       </v-data-table>
     </v-container>
-    {{pagination}}
+    <code>{{selectedTags.length}}</code>
   </v-container>
 </template>
 
 <script>
 import Toolbar from '@/components/Toolbar';
-import { mapActions, mapGetters } from 'vuex';
+import {
+  mapActions,
+  mapGetters
+} from 'vuex';
 import DataFilter from '@/components/DataFilter';
 export default {
   components: {
@@ -134,19 +208,31 @@ export default {
     pagination: {},
     tag: {
       status: ''
-    }
+    },
+    tableLoading: false,
+    selectedTags: []
   }),
   watch: {
     pagination: {
-      handler() {
-        this.filter.pageindex += 1;
-        this.getScoreTags(this.filter);
+      handler(newValue, oldValue) {
+        if (newValue.page > oldValue.page) {
+          let totalItems = newValue.totalItems;
+          let rowsPerPage = newValue.rowsPerPage;
+          let totalPages = Math.ceil(totalItems / rowsPerPage);
+          if (totalPages === newValue.page + 1) {
+            this.filter.pageindex += 1;
+            this.getData(this.filter);
+          }
+        }
       },
       deep: true
     }
   },
   computed: {
     ...mapGetters(['scoreTags']),
+    availableScoreTags() {
+      return this.scoreTags.filter(tag => tag.status !== this.status.deprecated.value);
+    },
     constant() {
       return this.$constant.basic;
     },
@@ -160,6 +246,7 @@ export default {
       return {
         on: this.dataStatus.find(status => status.name === 'able'),
         off: this.dataStatus.find(status => status.name === 'disable'),
+        deprecated: this.dataStatus.find(status => status.name === 'deprecated')
       }
     },
     tableHeaders() {
@@ -170,67 +257,78 @@ export default {
     ...mapActions([
       'getScoreTags',
       'addOrUpdataScoreTag',
-      // 'getPositions',
-      // 'getSpecialTags',
-      // 'getMissionTags',
-      // 'getLinks',
-      // 'getMetroInfo',
-      // 'getCommercialDistrict'
+      'updataScoreTagStatus',
+      'resetScoreTags'
     ]),
     newTag() {
+      this.tag.status = this.status.off.value;
       this.dialog = true;
     },
     resetForm() {
       this.tag = {}
     },
-    saveTag() {
-      this.addOrUpdataScoreTag(this.tag);
-    },
-    nextPage(pageObj) {
-      // let total = pageObj.totalItems / pageObj.rowsPerPage;
-      // let current = pageObj.page;
-      // if (total - current < 1) {
-      //   this.filter.pageindex += 1;
-      //   this.getScoreTags(this.filter)
-      // }
+    saveTag(tag = this.tag) {
+      this.addOrUpdataScoreTag(tag);
     },
     getFirstPage() {
       this.filter = {
-        pageindex: 1,
-        pagesize: 5
+        pageindex: this.pagination.page,
+        pagesize: this.pagination.rowsPerPage
       }
-      this.getScoreTags(this.filter);
+      this.getData(this.filter);
+    },
+    editTag(item) {
+      // this.tag = Object.assign({}, item);
+      this.tag = item;
+      this.dialog = true;
+    },
+    deprecateItem(item) {
+      this.updataScoreTagStatus({
+        ids: [item.id],
+        item: this.status.deprecated
+      });
+    },
+    multiDeprecate() {
+      let ids = this.selectedTags.map(tag => tag.id);
+      this.updataScoreTagStatus({
+        ids,
+        item: this.status.deprecated
+      });
+    },
+    closeDialog() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.resetForm();
+      }, 300)
+    },
+    switchStatus(item) {
+      // let tag = Object.assign({}, item);
+      let tag = item;
+      let on = this.status.on.value;
+      let off = this.status.off.value;
+      tag.status === on ? tag.status = off : tag.status = on;
+      this.saveTag(tag);
+    },
+    toggleSelectAll() {
+      if (this.selectedTags.length) this.selectedTags = []
+      else this.selectedTags = this.scoreTags.slice()
+    },
+    search() {
+      let rows = this.pagination.rowsPerPage;
+      if (rows < 0) rows = 99999;
+      this.filter.pageindex = 1;
+      this.filter.pagesize = rows;
+      this.getData(this.filter);
+    },
+    getData(params) {
+      this.tableLoading = true;
+      this.getScoreTags(params)
+        .then(() => this.tableLoading = false)
+        .catch(() => this.tableLoading = false)
     }
   },
   mounted() {
     this.getFirstPage();
-    // this.getPositions({
-    //   pageindex: '1',
-    //   pagesize: '100'
-    // });
-    // this.getSpecialTags({
-    //   pageindex: '1',
-    //   pagesize: '100'
-    // });
-    // this.getMissionTags({
-    //   pageindex: '1',
-    //   pagesize: '100'
-    // });
-    // this.getLinks({
-    //   pageindex: '1',
-    //   pagesize: '100'
-    // });
-    // this.getMetroInfo({
-    //   pageindex: '1',
-    //   pagesize: '100'
-    // });
-    // this.getCommercialDistrict({
-    //   pageindex: '1',
-    //   pagesize: '100'
-    // });
   }
 }
 </script>
-
-<style lang="css">
-</style>

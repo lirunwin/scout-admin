@@ -178,7 +178,10 @@
 </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {
+  mapGetters,
+  mapActions
+} from "vuex";
 export default {
   name: "feature",
   data() {

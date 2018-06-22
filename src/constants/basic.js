@@ -31,13 +31,6 @@ export default {
   ],
   scoreTagTableHeaders: [
     {
-      text: '状态',
-      align: 'left',
-      sortable: false,
-      value: 'status',
-      constant: [true, 'global.dataStatus']
-    },
-    {
       text: '名称',
       align: 'left',
       sortable: false,
@@ -62,6 +55,14 @@ export default {
       sortable: false,
       value: 'tagsource'
     },
+    {
+      text: '状态',
+      align: 'left',
+      sortable: false,
+      value: 'status',
+      action: true,
+      constant: [true, 'global.dataStatus']
+    }
   ]
 
-}
+};
