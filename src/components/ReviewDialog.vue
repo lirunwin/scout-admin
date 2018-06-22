@@ -1,5 +1,5 @@
 <template lang="html">
-  <v-dialog v-model="computedShowDialog" persistent max-width="500px">
+  <v-dialog v-model="value" persistent max-width="500px">
     <v-card>
       <v-card-title>
         <span class="headline">审核</span>
@@ -39,7 +39,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click="showDialog = !showDialog">关闭</v-btn>
+        <v-btn color="primary" @click="closeDialog">关闭</v-btn>
         <v-btn color="primary" @click="onReview">确定</v-btn>
       </v-card-actions>
     </v-card>
@@ -48,12 +48,7 @@
 
 <script>
 export default {
-  props: {
-    show: {
-      type: Boolean,
-      default: false
-    }
-  },
+  props: ['value'],
   data: () => ({
     showDialog: true,
     review: {
@@ -61,20 +56,12 @@ export default {
       note: ''
     }
   }),
-  computed: {
-    computedShowDialog() {
-      if (this.showDialog) {
-        return this.show && this.showDialog
-      } else {
-        this.showDialog = true
-        return false;
-      }
-
-    }
-  },
   methods: {
+    closeDialog() {
+      this.$emit('input', false);
+    },
     onReview() {
-      this.$emit('onReview');
+      this.$emit('onReview', this.review);
     }
   }
 }

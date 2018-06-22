@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>specialTags</div>  
+  <div> zone </div>
 </template>
 
 <script>

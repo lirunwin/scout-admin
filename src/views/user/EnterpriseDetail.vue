@@ -61,7 +61,7 @@ export default {
     Comments
   },
   data: () => ({
-    tabActive: "2",
+    tabActive: "0",
 
   }),
   computed: {

@@ -158,7 +158,12 @@ const actions = {
     return UserService.getInfoChangeLog(payload).then((res) => {
       return res;
     });
-  }
+  },
+  updataEnterpriseInfo(context, payload) {
+    return UserService.updataEnterpriseInfo(payload).then((res) => {
+      return res;
+    });
+  },
 };
 
 export default {

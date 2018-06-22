@@ -11,12 +11,9 @@ const mutations = {
 const actions = {
   getCities(context, payload) {
     return CommonService.getCities(payload).then((cities => {
-      if(cities) {
-        context.commit('updateCities', cities);
-      }
+      context.commit('updateCities', cities);
     }));
   }
-
 };
 
 export default {

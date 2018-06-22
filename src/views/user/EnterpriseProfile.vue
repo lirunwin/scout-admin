@@ -60,7 +60,7 @@
         </div>
       </v-flex>
       <v-flex xs5>
-        <img src="http://img3.jc001.cn/img/544/1737544/1601/16569ca42a785ff.jpg">
+        <!-- <img src="http://img3.jc001.cn/img/544/1737544/1601/16569ca42a785ff.jpg"> -->
       </v-flex>
     </v-layout>
     <v-layout row justify-center>
@@ -80,7 +80,7 @@
               <v-layout wrap>
                 <v-flex xs12>
                   <v-select
-                    :items="constant.status"
+                    :items="constant.level"
                     item-text="label"
                     item-value="value"
                     v-model="detailForm.businesslevel"
@@ -95,7 +95,7 @@
                 </v-flex>
                 <v-flex xs12>
                   <v-select
-                    :items="constant.level"
+                    :items="constant.nature"
                     item-text="label"
                     item-value="value"
                     v-model="detailForm.comnae"
@@ -117,12 +117,12 @@
                 <v-flex xs12>
                   <v-layout row wrap>
                     <v-flex xs12>
-                      <city-selector @onChange="locationPicked"></city-selector>
+                      <city-selector v-model="location"></city-selector>
                     </v-flex>
                     <v-flex xs12>
                       <v-text-field
                         label="详细地址"
-                        v-model="detailForm.comname"
+                        v-model="detailForm.address"
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
@@ -155,71 +155,30 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click.native="dialogForForm = false">关闭</v-btn>
-            <v-btn color="primary" @click.native="dialogForForm = false">确定</v-btn>
+            <v-btn color="primary" @click.native="updateEnterpriseInfo">确定</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-layout>
-    <v-layout row justify-center>
-      <v-dialog v-model="dialogForReview" persistent max-width="500px">
-        <v-card>
-          <v-card-title>
-            <span class="headline">审核</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container grid-list-md class="py-0">
-              <v-layout>
-                <v-radio-group v-model="review.checkstatus">
-                  <v-layout row wrap>
-                    <v-flex xs4>
-                      <v-radio
-                        label="通过"
-                        :value="checkConstant.pass.value"
-                        color="primary"
-                      ></v-radio>
-                    </v-flex>
-                    <v-flex xs4>
-                      <v-radio
-                        label="不通过"
-                        :value="checkConstant.reject.value"
-                        color="primary"
-                      ></v-radio>
-                    </v-flex>
-                  </v-layout>
-                </v-radio-group>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs12>
-                  <v-text-field
-                    label="审核内容"
-                    multi-line
-                    v-model="review.remark"
-                  ></v-text-field>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" @click.native="dialogForReview = false">关闭</v-btn>
-            <v-btn color="primary" @click.native="onReviewEnterprise">确定</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <review-dialog v-model="dialogForReview" @onReview="onReviewEnterprise"></review-dialog>
+    <pre>
+      {{detailForm}}
+    </pre>
   </v-container>
 </template>
 
 <script>
 import CitySelector from '@/components/CitySelector';
 import ImageUploader from '@/components/ImageUploader';
+import ReviewDialog from '@/components/ReviewDialog';
 import {
   mapActions
 } from 'vuex';
 export default {
   components: {
     CitySelector,
-    ImageUploader
+    ImageUploader,
+    ReviewDialog
   },
   props: ['detail'],
   data: () => ({
@@ -255,15 +214,34 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['reviewEnterprise']),
-    onReviewEnterprise() {
+    ...mapActions(['reviewEnterprise', 'updataEnterpriseInfo']),
+    onReviewEnterprise(review) {
       this.review.id = this.$route.params.id;
+      this.review.checkstatus = review.pass;
+      this.review.remark = review.note;
       this.reviewEnterprise(this.review);
     },
-    locationPicked(location) {
-      this.detailForm.provinceid = location.province;
-      this.detailForm.cityid = location.city;
-      this.detailForm.countyid = location.county;
+    updateEnterpriseInfo() {
+      let info = {
+        id: this.detailForm.comid,
+        comname: this.detailForm.comname,
+        nature: this.detailForm.nature,
+        businesslevel: this.detailForm.businesslevel,
+        comemial: this.detailForm.comemial,
+        contactsname: this.detailForm.contactsname,
+        contactstel: this.detailForm.contactstel,
+        provinceid: this.location.province,
+        cityid: this.location.city,
+        countyid: this.location.county,
+        address: this.detailForm.address,
+        officephone: this.detailForm.officephone,
+        businesslicensefile: this.detailForm.businesslicensefile,
+        introduce: this.detailForm.introduce
+      }
+      // this.detailForm.rovinceid = this.location.province;
+      // this.detailForm.cityid = this.location.city;
+      // this.detailForm.countyid = this.location.county;
+      this.updataEnterpriseInfo(info);
     }
   }
 }

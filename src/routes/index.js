@@ -5,6 +5,7 @@ import Login from '@/views/Login';
 import Permission from '@/views/Permission';
 import UserPages from './user';
 import SystemPages from './system';
+import BasicPages from './basic';
 Vue.use(Router)
 
 export default new Router({
@@ -30,5 +31,6 @@ export default new Router({
     },
     ...UserPages,
     ...SystemPages,
+    ...BasicPages,
   ]
 })

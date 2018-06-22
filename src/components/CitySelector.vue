@@ -11,7 +11,7 @@
           :disabled="province.length === 0"
           :loading="province.length === 0"
           hide-details
-          @change="onProvinceChange"
+          @input="onProvinceChange"
         ></v-select>
       </v-flex>
       <v-flex xs12 sm4>
@@ -24,7 +24,7 @@
           hide-details
           :disabled="city.length === 0"
           :loading="isCityLoading"
-          @change="onCityChange"
+          @input="onCityChange"
         ></v-select>
       </v-flex>
       <v-flex xs12 sm4>
@@ -37,7 +37,7 @@
           hide-details
           :disabled="county.length === 0"
           :loading="isCountyLoading"
-          @change="onCountyChange"
+          @input="onCountyChange"
           ></v-select>
       </v-flex>
     </v-layout>
@@ -47,14 +47,11 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  // props: ['location'],
+  name: 'CitySelector',
+  props: ['value'],
   data: () => ({
     items: [],
-    location: {
-      province: '0',
-      city: '0',
-      county: '0'
-    },
+    location: {},
     isCityLoading: false,
     isCountyLoading: false
   }),
@@ -69,11 +66,6 @@ export default {
         return []
       }
       let city = this.cities.filter(item => item.pid === id);
-      if (city.length === 0) {
-        this.isCityLoading = true;
-        this.getCities({ id })
-          .then(() => this.isCityLoading = false);
-      }
       return city;
     },
     county() {
@@ -82,33 +74,64 @@ export default {
         return []
       }
       let county = this.cities.filter(item => item.pid === id);
-      if (county.length === 0) {
-        this.isCountyLoading = true;
-        this.getCities({ id })
-          .then(() => this.isCountyLoading = false);
-      }
       return county;
     }
   },
   methods: {
     ...mapActions(['getCities']),
-    onProvinceChange() {
+    getCity(id) {
+      if (!this.isCityLoading) {
+        this.isCityLoading = true;
+        this.getCities({ id })
+          .then(() => this.isCityLoading = false);
+      }
+    },
+    getCounty(id) {
+      if (!this.isCountyLoading) {
+        this.isCountyLoading = true;
+        this.getCities({ id })
+          .then(() => this.isCountyLoading = false);
+      }
+    },
+    onProvinceChange(id) {
       this.onChange();
       this.location.city = '0';
       this.location.county = '0';
+      let city = this.cities.filter(item => item.pid === id);
+      if (city.length === 0) {
+        this.getCity(id);
+      }
     },
-    onCityChange() {
+    onCityChange(id) {
       this.onChange();
       this.location.county = '0';
+      let county = this.cities.filter(item => item.pid === id);
+      if (county.length === 0) {
+        this.getCounty(id);
+      }
     },
-    onCountyChange() {
+    onCountyChange(id) {
       this.onChange();
     },
     onChange() {
-      this.$emit('onChange', this.location);
+      this.$emit('input', this.location);
+    },
+    getDefault() {
+      let defaultLocation = this.value;
+      if (defaultLocation.province > 0) {
+        this.getCities({ id: "0" });
+        this.getCities({ id: defaultLocation.province });
+        this.getCities({ id: defaultLocation.city });
+      } else {
+        this.getCities({ id: "0" });
+      }
     }
+  },
+  mounted() {
+    this.location = Object.assign({}, this.value);
+    console.log(this.value);
+    this.getDefault();
   }
-
 }
 </script>
 

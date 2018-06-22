@@ -81,16 +81,13 @@ export default {
     handleClick() {
       console.log('sidebar clicked')
     },
-    ...mapActions(['getAllFeatrues', 'getCities'])
+    ...mapActions(['getAllFeatrues'])
   },
   mounted() {
     this.getAllFeatrues()
       .then(res => {
 
       });
-    this.getCities({
-      id: "0"
-    });
   }
 }
 </script>

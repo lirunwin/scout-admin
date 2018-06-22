@@ -106,49 +106,41 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <v-dialog v-model="showImg" max-width="90%">
-      <v-card>
-        <v-card-title>
-          <v-spacer></v-spacer>
-          <v-btn icon color="secondary darken-3" @click="showImg = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-container grid-list-xs>
-            <v-layout row wrap justify-center>
-              <img :src="image" class="mx">
-            </v-layout>
-          </v-container>
-        </v-card-title>
-      </v-card>
-    </v-dialog>
-    <review-dialog :show="showReviewDialog"></review-dialog>
+    <review-dialog v-model="showReviewDialog" @onReview="onReviewEnterprise"></review-dialog>
+    <img-view-dialog v-model="showImg" :src="image"></img-view-dialog>
   </v-container>
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapActions
-} from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import ReviewDialog from '@/components/ReviewDialog';
+import ImgViewDialog from '@/components/ImgViewDialog';
 export default {
   components: {
-    ReviewDialog
+    ReviewDialog,
+    ImgViewDialog
   },
   data: () => ({
     showImg: false,
     showReviewDialog: false,
-    image: ''
+    image: '',
+    review: {}
   }),
   computed: {
     ...mapGetters(['infoChangeLog']),
   },
   methods: {
-    ...mapActions(['getInfoChangeLog']),
+    ...mapActions(['getInfoChangeLog', 'reviewEnterprise']),
     onShowImg(src) {
       this.image = src;
       this.showImg = true;
-    }
+    },
+    onReviewEnterprise(review) {
+      this.review.id = this.$route.params.id;
+      this.review.checkstatus = review.pass;
+      this.review.remark = review.note;
+      this.reviewEnterprise(this.review);
+    },
   },
   mounted() {
     this.getInfoChangeLog({

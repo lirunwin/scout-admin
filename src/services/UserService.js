@@ -14,7 +14,9 @@ export default {
 
     getBalanceLog: (data) => Api.post('companyManagement/getCompanyFinanceInfo', data),
 
+    getInfoChangeLog: (data) => Api.post('companyManagement/getCompanyChangeCheckInfo', data),
+
     reviewEnterprise: (data) => Api.post('companyManagement/checkCompany', data),
 
-    getInfoChangeLog: (data) => Api.post('companyManagement/getCompanyChangeCheckInfo', data)
+    updataEnterpriseInfo: (data) => Api.post('companyManagement/updateCompanyInfoForAdmin', data)
   };
