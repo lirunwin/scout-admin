@@ -1,11 +1,11 @@
 <template lang="html">
   <v-container fluid>
-    <toolbar title="评分标签"></toolbar>
+    <toolbar :title="$route.meta.title"></toolbar>
     <v-btn
       color="primary"
       class="mt-3"
       @click="newTag">
-      新增标签
+      {{$route.meta.title}}
     </v-btn>
     <v-tooltip
       bottom
@@ -27,7 +27,7 @@
       max-width="400px">
       <v-card>
         <v-card-title class="pb-0">
-          <span class="headline">{{!tag.id? '新增评分标签' : '修改评分标签'}}</span>
+          <span class="headline">{{!tag.id? `新增${$route.meta.title}` : `修改${$route.meta.title}`}}</span>
           <v-spacer></v-spacer>
           <v-btn color="secondary darken-3"
             @click="closeDialog"
@@ -98,7 +98,9 @@
           <v-btn class="error"
             @click="resetForm">重置</v-btn>
           <v-btn class="primary"
-            @click="saveTag">保存</v-btn>
+            :loading="dialogBtnLoading"
+            :disable="dialogBtnLoading"
+            @click="saveTag()">保存</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -210,6 +212,7 @@ export default {
       status: ''
     },
     tableLoading: false,
+    dialogBtnLoading: false,
     selectedTags: []
   }),
   watch: {
@@ -237,7 +240,7 @@ export default {
       return this.$constant.basic;
     },
     tagTypes() {
-      return this.constant.scoreTagTypes
+      return this.$constant.global.jobType
     },
     dataStatus() {
       return this.$constant.global.dataStatus
@@ -268,12 +271,18 @@ export default {
       this.tag = {}
     },
     saveTag(tag = this.tag) {
-      this.addOrUpdataScoreTag(tag);
+      this.dialogBtnLoading = true;
+      this.addOrUpdataScoreTag(tag)
+        .then(() => {
+          this.closeDialog();
+          this.dialogBtnLoading = false;
+        })
+        .catch(error => this.dialogBtnLoading = false)
     },
     getFirstPage() {
       this.filter = {
         pageindex: this.pagination.page,
-        pagesize: this.pagination.rowsPerPage
+        pagesize: this.pagination.rowsPerPage * 2 + 1
       }
       this.getData(this.filter);
     },
@@ -285,14 +294,14 @@ export default {
     deprecateItem(item) {
       this.updataScoreTagStatus({
         ids: [item.id],
-        item: this.status.deprecated
+        status: this.status.deprecated.value
       });
     },
     multiDeprecate() {
       let ids = this.selectedTags.map(tag => tag.id);
       this.updataScoreTagStatus({
         ids,
-        item: this.status.deprecated
+        status: this.status.deprecated.value
       });
     },
     closeDialog() {
@@ -317,7 +326,7 @@ export default {
       let rows = this.pagination.rowsPerPage;
       if (rows < 0) rows = 99999;
       this.filter.pageindex = 1;
-      this.filter.pagesize = rows;
+      this.filter.pagesize = rows * 2 + 1;
       this.getData(this.filter);
     },
     getData(params) {
@@ -329,6 +338,19 @@ export default {
   },
   mounted() {
     this.getFirstPage();
+    // Array(300)
+    //   .fill('')
+    //   .map((v, i) => {
+    //     this.saveTag({
+    //       etagtype: "EVALUATION_USER_COMPANY",
+    //       sort: 12,
+    //       source: 123,
+    //       status: "DATA_DISABLED",
+    //       tagname: `需要批量删除${i}`,
+    //       tagsource: 123,
+    //     })
+    //   });
+    // console.log(array);
   }
 }
 </script>

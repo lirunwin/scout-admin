@@ -1,8 +1,8 @@
 export default {
   projectName: '懒虫动动后台管理系统',
-  baseURL: 'http://192.168.1.103:8085/',
+  // baseURL: 'http://192.168.0.103:8085/',
   // baseURL: 'http://192.168.1.4:8085/',
-  // baseURL:'http://192.168.0.107:8085/',
+  baseURL:'http://192.168.0.105:8085/',
   prototype: 'https://mco2d9.axshare.com/',
 
   constant: {

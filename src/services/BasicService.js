@@ -22,12 +22,12 @@ export default {
     updataMissionTagStatus: (data) => Api.post('basicManagement/updateBasisTaskTagStatus', data),
 
     // 跳转链接
-    getLinks: (params) => Api.post('basicManagement/getBasisLinkInfo', params),
-    addOrUpdataLink: (data) => Api.post('basicManagement/createOrUpdateBasisLinkInfo', data),
-    updataLinkStatus: (data) => Api.post('basicManagement/deleteBasisLinkInfo', data),
+    getForwardLinks: (params) => Api.post('basicManagement/getBasisLinkInfo', params),
+    addOrUpdataForwardLink: (data) => Api.post('basicManagement/createOrUpdateBasisLinkInfo', data),
+    updataForwardLinkStatus: (data) => Api.post('basicManagement/deleteBasisLinkInfo', data),
 
     // 地铁站台
-    getMetroInfo: (params) => Api.post('basicManagement/getBasisMetroPlatformInfo', params),
+    getMetroInfos: (params) => Api.post('basicManagement/getBasisMetroPlatformInfo', params),
     addOrUpdataMetroInfo: (data) => Api.post('basicManagement/createOrUpdateBasisMetroPlatformInfo', data),
     updataMetroInfoStatus: (data) => Api.post('basicManagement/updateBasisMetroPlatformStatus', data),
 

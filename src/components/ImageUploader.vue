@@ -10,7 +10,7 @@
           <img :src="imageUrl">
       </v-flex>
       <v-flex xs6 class="text-xs-center">
-        <v-btn color="primary" @click="chooseFile">
+        <v-btn color="primary" @click="chooseFile" :loading="loading">
           上传图片
         </v-btn>
       </v-flex>
@@ -19,16 +19,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   data: () => ({
     image: null,
-    imageUrl: require('@/assets/img/img_placeholder.gif')
+    imageUrl: require('@/assets/img/img_placeholder.gif'),
+    loading: false
   }),
   methods: {
+    ...mapActions(['uploadFile']),
     chooseFile() {
       this.$refs.uploadImage.click();
     },
     onFilePicked(event) {
+      this.loading = true;
       const files = event.target.files;
       let filename = files[0].name;
       if (filename.lastIndexOf('.') <= 0) {
@@ -40,7 +44,18 @@ export default {
       })
       fileReader.readAsDataURL(files[0]);
       this.image = files[0];
-      this.$emit('onChange', this.image);
+
+      let formData = new FormData();
+      formData.append("file", files[0]);
+      // var request = new XMLHttpRequest();
+      // request.open("POST", "http://192.168.0.105:8085/common/upload");
+      // request.send(formData);
+      this.uploadFile(formData)
+        .then(res => {
+          this.$emit('input', res.src);
+          this.loading = false;
+        });
+
     }
   }
 }

@@ -14,7 +14,7 @@
           @input="onProvinceChange"
         ></v-select>
       </v-flex>
-      <v-flex xs12 sm4>
+      <v-flex xs12 sm4 v-if="!disabledCity">
         <v-select
           :items="city"
           v-model="location.city"
@@ -27,7 +27,7 @@
           @input="onCityChange"
         ></v-select>
       </v-flex>
-      <v-flex xs12 sm4>
+      <v-flex xs12 sm4 v-if="!disabledCounty">
         <v-select
           :items="county"
           v-model="location.county"
@@ -41,6 +41,7 @@
           ></v-select>
       </v-flex>
     </v-layout>
+    {{county}}
   </v-container>
 </template>
 
@@ -48,7 +49,7 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'CitySelector',
-  props: ['value'],
+  props: ['value', 'disabledCity', 'disabledCounty'],
   data: () => ({
     items: [],
     location: {},
@@ -74,6 +75,7 @@ export default {
         return []
       }
       let county = this.cities.filter(item => item.pid === id);
+
       return county;
     }
   },
@@ -99,7 +101,7 @@ export default {
       this.location.county = '0';
       let city = this.cities.filter(item => item.pid === id);
       if (city.length === 0) {
-        this.getCity(id);
+        this.getCity(id)
       }
     },
     onCityChange(id) {
@@ -107,7 +109,7 @@ export default {
       this.location.county = '0';
       let county = this.cities.filter(item => item.pid === id);
       if (county.length === 0) {
-        this.getCounty(id);
+        this.getCounty(id)
       }
     },
     onCountyChange(id) {

@@ -20,7 +20,19 @@ export default {
         sort: '2'
       }
     ],
-    tablePagination: [3,10,25,{'text': '全部','value': -1}]
+    tablePagination: [10,20,50,{'text': '全部','value': -1}],
+    jobType: [
+      {
+        label: '兼职',
+        value: 'RECRUITMENT_PARTTIME',
+        sort: '0'
+      },
+      {
+        label: '实习',
+        value: 'RECRUITMENT_PRACTICE',
+        sort: '1'
+      }
+    ],
   },
   basic
 };

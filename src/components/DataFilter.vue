@@ -17,7 +17,7 @@
       </v-flex>
       <v-flex xs6 md2 v-if="status">
         <v-select
-          :items="dataStatus"
+          :items="availableDataStatus"
           item-text="label"
           item-value="value"
           v-model="filter.status"
@@ -33,6 +33,9 @@
           @input="go"
         ></v-text-field>
       </v-flex>
+      <!-- <v-flex xs6>
+        <city-selector :disabledCounty="true" v-model="location"></city-selector>
+      </v-flex> -->
       <v-flex style="flex:0" class="pb-2 px-0"><v-btn color="primary" class="mb-3" @click="search">{{ title }}</v-btn></v-flex>
       <v-flex style="flex:0" class="pb-2 px-0"><v-btn color="primary lighten-1" class="mb-3" @click="resetForm">重置</v-btn></v-flex>
     </v-layout>
@@ -40,7 +43,9 @@
 </template>
 
 <script>
+import CitySelector from '@/components/CitySelector';
 export default {
+  components: { CitySelector },
   props: {
     value: Object,
     type: Array,
@@ -55,6 +60,10 @@ export default {
     title: {
       type: String,
       default: '搜索'
+    },
+    city: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -62,16 +71,19 @@ export default {
       type: '',
       status: '',
       keyword: ''
-    }
+    },
+    location: {}
   }),
   computed: {
     dataStatus() {
-      let status = this.$constant.global.dataStatus;
-      return status;
+      return this.$constant.global.dataStatus;
+    },
+    availableDataStatus() {
+      return this.dataStatus.filter(status => status.name !== 'deprecated')
     }
   },
   mounted() {
-    this.filter = Object.assign({}, this.value)
+    this.filter = Object.assign({}, this.value);
   },
   methods: {
     go() {

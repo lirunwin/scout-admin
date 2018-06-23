@@ -1,6 +1,5 @@
 import axios from 'axios';
 import config from '@/config';
-
 let instance = axios.create({
   baseURL: config.baseURL,
   // timeout: 1000,
@@ -9,7 +8,12 @@ let instance = axios.create({
 instance.interceptors.response.use(response => {
   // TODO: some auth stuff
   console.log(response)
-  return response.data.data;
+  let data = response.data.data
+  if(data) {
+    return data
+  } else {
+    return response.data
+  }
 }, error => {
   console.log({error});
   return Promise.reject(error);
