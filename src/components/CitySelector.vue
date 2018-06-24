@@ -46,7 +46,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import {
+  mapGetters,
+  mapActions
+} from 'vuex'
 export default {
   name: 'CitySelector',
   props: ['value', 'disabledCity', 'disabledCounty'],
@@ -84,14 +87,18 @@ export default {
     getCity(id) {
       if (!this.isCityLoading) {
         this.isCityLoading = true;
-        this.getCities({ id })
+        this.getCities({
+            id
+          })
           .then(() => this.isCityLoading = false);
       }
     },
     getCounty(id) {
       if (!this.isCountyLoading) {
         this.isCountyLoading = true;
-        this.getCities({ id })
+        this.getCities({
+            id
+          })
           .then(() => this.isCountyLoading = false);
       }
     },
@@ -112,7 +119,7 @@ export default {
         this.getCounty(id)
       }
     },
-    onCountyChange(id) {
+    onCountyChange() {
       this.onChange();
     },
     onChange() {
@@ -121,11 +128,19 @@ export default {
     getDefault() {
       let defaultLocation = this.value;
       if (defaultLocation.province > 0) {
-        this.getCities({ id: "0" });
-        this.getCities({ id: defaultLocation.province });
-        this.getCities({ id: defaultLocation.city });
+        this.getCities({
+          id: "0"
+        });
+        this.getCities({
+          id: defaultLocation.province
+        });
+        this.getCities({
+          id: defaultLocation.city
+        });
       } else {
-        this.getCities({ id: "0" });
+        this.getCities({
+          id: "0"
+        });
       }
     }
   },

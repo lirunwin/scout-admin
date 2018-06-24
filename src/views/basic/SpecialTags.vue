@@ -178,7 +178,10 @@
 
 <script>
 import Toolbar from '@/components/Toolbar';
-import { mapActions, mapGetters } from 'vuex';
+import {
+  mapActions,
+  mapGetters
+} from 'vuex';
 import DataFilter from '@/components/DataFilter';
 export default {
   components: {
@@ -259,7 +262,7 @@ export default {
           this.closeDialog();
           this.dialogBtnLoading = false;
         })
-        .catch(error => this.dialogBtnLoading = false);
+        .catch(() => this.dialogBtnLoading = false);
     },
     getFirstPage() {
       this.filter = {
@@ -269,8 +272,8 @@ export default {
       this.getData(this.filter);
     },
     editTag(item) {
-      // this.tag = Object.assign({}, item);
-      this.tag = item;
+      this.tag = Object.assign({}, item);
+      // this.tag = item;
       this.dialog = true;
     },
     deprecateItem(item) {
@@ -284,7 +287,7 @@ export default {
       this.updataSpecialTagStatus({
         ids,
         status: this.status.deprecated.value
-      });
+      }).then(() => this.selectedTags = []);
     },
     closeDialog() {
       this.dialog = false;

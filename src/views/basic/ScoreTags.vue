@@ -277,7 +277,7 @@ export default {
           this.closeDialog();
           this.dialogBtnLoading = false;
         })
-        .catch(error => this.dialogBtnLoading = false)
+        .catch(() => this.dialogBtnLoading = false)
     },
     getFirstPage() {
       this.filter = {
@@ -287,8 +287,8 @@ export default {
       this.getData(this.filter);
     },
     editTag(item) {
-      // this.tag = Object.assign({}, item);
-      this.tag = item;
+      this.tag = Object.assign({}, item);
+      // this.tag = item;
       this.dialog = true;
     },
     deprecateItem(item) {
@@ -302,7 +302,7 @@ export default {
       this.updataScoreTagStatus({
         ids,
         status: this.status.deprecated.value
-      });
+      }).then(() => this.selectedTags = []);
     },
     closeDialog() {
       this.dialog = false;

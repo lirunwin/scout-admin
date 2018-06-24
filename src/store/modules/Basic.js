@@ -1,198 +1,16 @@
 import BasicService from '@/services/BasicService';
+
+import ST from '@/mockdata/scoreTags';
+
 const state = {
-  // scoreTags: [{
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '1',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '刻录机啊',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_USER_COMPANY',
-  //     id: '2',
-  //     source: 12,
-  //     status: 'DATA_NORMAL',
-  //     tagname: '大是大非',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_USER_COMPANY',
-  //     id: '3',
-  //     source: 12,
-  //     status: 'DATA_NORMAL',
-  //     tagname: '如何饿饿',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '4',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '5',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视1',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '6',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视2',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '7',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视7',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '8',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视8',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '9',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视9',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '10',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视10',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '11',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视11',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '12',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视12',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '13',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视13',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '14',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视14',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '15',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视15',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '16',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视16',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '17',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视17',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '18',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视18',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '19',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视19',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '20',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视20',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '21',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视21',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '22',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视22',
-  //     tagsource: 22,
-  //   },
-  //   {
-  //     etagtype: 'EVALUATION_COMPANY_USER',
-  //     id: '23',
-  //     source: 12,
-  //     status: 'DATA_DISABLED',
-  //     tagname: '更好看电视23',
-  //     tagsource: 22,
-  //   }
-  // ],
-  scoreTags:[],
-  positions:[],
-  topLevelPositions:[],
-  specialTags:[],
-  missionTags:[],
-  forwardLinks:[],
-  metroInfos:[],
-  commercialDistricts:[]
+  scoreTags: ST,
+  positions: [],
+  topLevelPositions: [],
+  specialTags: [],
+  missionTags: [],
+  forwardLinks: [],
+  metroInfos: [],
+  commercialDistricts: []
 };
 const getters = {
   scoreTags: state => state.scoreTags,
@@ -204,61 +22,108 @@ const getters = {
   metroInfos: state => state.metroInfos,
   commercialDistricts: state => state.commercialDistricts
 };
+
+const updataState = (state, stateName, payload) => {
+  let tag = state[stateName].find(tag => tag.id = payload.id);
+  if (tag) {
+    state[stateName] = state[stateName].map(item => {
+      if (item.id === payload.id) {
+        return payload;
+      }
+      return item;
+    });
+  } else {
+    state[stateName].unshift(payload);
+  }
+};
+
+const removeItemsStatus = (state, name, {ids, status}) => {
+  ids.map(id => {
+    let tag = state[name].find(item => item.id === id);
+    if (tag) {
+      tag.status = status;
+    }
+  });
+};
+
 const mutations = {
   updateScoreTags: (state, payload) => state.scoreTags = state.scoreTags.concat(payload),
-  pushToScoreTags: (state, payload) => state.scoreTags.push(payload),
+  updateScoreTag: (state, payload) => updataState(state, 'scoreTags', payload),
   resetScoreTags: (state) => state.scoreTags = [],
+  removeDeprecatedScoreTags: (state, payload) => removeItemsStatus(state, 'coreTags', payload),
 
+  //职位
   updatePositions: (state, payload) => state.positions = state.positions.concat(payload),
-  pushToPositions: (state, payload) => state.positions.push(payload),
-  pushToTopLevelPositions: state => (state, payload) => state.pushToTopLevelPositions.push(payload),
+  updatePosition: (state, payload) => updataState(state, 'positions', payload),
+  pushToTopLevelPositions: (state, payload) => state.pushToTopLevelPositions.push(payload),
   resetPositions: (state) => state.positions = [],
+  removeDeprecatedPositions: (state, payload) => removeItemsStatus(state, 'positions', payload),
 
-
+  // 特色标签
   updateSpecialTags: (state, payload) => state.specialTags = state.specialTags.concat(payload),
-  pushToSpecialTags: (state, payload) => state.specialTags.push(payload),
+  updateSpecialTag: (state, payload) => updataState(state, 'specialTags', payload),
   resetSpecialTags: (state) => state.specialTags = [],
+  removeDeprecatedSpecialTags: (state, payload) => removeItemsStatus(state, 'specialTags', payload),
 
+  // 任务标签
   updateMissionTags: (state, payload) => state.missionTags = state.missionTags.concat(payload),
-  pushToMissionTags: (state, payload) => state.missionTags.push(payload),
+  updateMissionTag: (state, payload) => updataState(state, 'missionTags', payload),
   resetMissionTags: (state) => state.missionTags = [],
+  removeDeprecatedMissionTags: (state, payload) => removeItemsStatus(state, 'missionTags', payload),
 
+  // 跳转链接
   updateForwardLinks: (state, payload) => state.forwardLinks = state.forwardLinks.concat(payload),
-  pushToForwardLinks: (state, payload) => state.forwardLinks.push(payload),
+  updateForwardLink: (state, payload) => updataState(state, 'forwardLinks', payload),
   resetForwardLinks: (state) => state.forwardLinks = [],
+  removeDeprecateForwardLinks: (state, payload) => removeItemsStatus(state, 'forwardLinks', payload),
 
+  // 地铁信息
   updateMetroInfos: (state, payload) => state.metroInfos = state.metroInfos.concat(payload),
-  pushToMetroInfos: (state, payload) => state.metroInfos.push(payload),
+  updateMetroInfo: (state, payload) => updataState(state, 'metroInfos', payload),
   resetMetroInfos: (state) => state.metroInfos = [],
+  removeDeprecateMetroInfos: (state, payload) => removeItemsStatus(state, 'metroInfos', payload),
 
+  // 商区信息
   updateCommercialDistricts: (state, payload) => state.commercialDistricts = state.commercialDistricts.concat(payload),
-  pushToCommercialDistricts: (state, payload) => state.commercialDistricts.push(payload),
+  updateCommercialDistrict: (state, payload) => updataState(state, 'commercialDistricts', payload),
   resetCommercialDistricts: (state) => state.commercialDistricts = [],
+  removeDeprecateCommercialDistricts: (state, payload) => removeItemsStatus(state, 'commercialDistricts', payload),
+};
+const commitUpdateState = ({commit}, name, newState) => {
+  if (newState.pageindex === 1) {
+    commit(`rest${name}`);
+  }
+  commit(`update${name}`, newState);
+  return newState;
+};
+const commitUpdateStateElement = ({commit}, name, newValue, msg='操作成功') => {
+  commit('updateScoreTag', newValue);
+  dispatch('showSnackbar', msg);
+  if (!payload.id) {
+    payload.id = res;
+  }
+  commit('updateScoreTag', newValue);
+  return payload;
 };
 const actions = {
   // 评分标签
   getScoreTags(context, payload) {
-    return BasicService.getScoreTags(payload).then(scoreTags => {
-      if(payload.pageindex === 1) {
-        context.commit('resetScoreTags');
-      }
-      context.commit('updateScoreTags', scoreTags.content);
-      return scoreTags;
-    });
+    return BasicService.getScoreTags(payload).then(res => commitUpdateState(context, 'ScoreTags', res.content));
   },
   addOrUpdataScoreTag(context, payload) {
     return BasicService.addOrUpdataScoreTag(payload).then(res => {
+      context.commit('updateScoreTag', payload);
       context.dispatch('showSnackbar', res.msg);
       if (!payload.id) {
         payload.id = res;
-        context.commit('pushToPositions', payload);
       }
+      context.commit('updateScoreTag', payload);
       return payload;
     });
   },
-  updataPositionStatus(context, payload) {
-    return BasicService.updataPositionStatus(payload).then(res => {
-      context.commit('removeDdeprecatedPosition', res.msg);
+  updataScoreTagStatus(context, payload) {
+    return BasicService.updataScoreTagStatus(payload).then(res => {
+      context.commit('removeDeprecatedScoreTags', payload);
       context.dispatch('showSnackbar', res.msg);
       return res;
     });
@@ -278,8 +143,8 @@ const actions = {
   // pushToTopLevelPositions
   getTopLevelPositions(context) {
     return BasicService.getPositions({
-      pageindex:1,
-      pagesize:'-1',
+      pageindex: 1,
+      pagesize: '-1',
       pid: 0
     }).then(positions => {
       context.commit('updateTopLevelPositions', positions.content);
@@ -292,7 +157,7 @@ const actions = {
       if (!payload.id) {
         payload.id = res;
         context.commit('pushToScoreTags', payload);
-        if(payload.pid) {
+        if (payload.pid) {
           context.commit('pushToTopLevelPositions', payload);
         }
       }
@@ -302,14 +167,10 @@ const actions = {
 
   updataPositionStatus(context, payload) {
     return BasicService.updataPositionStatus(payload).then(res => {
-      // context.commit('pushScoreTag', scoreTags);
+      context.commit('removeDeprecatedPositions', payload);
       context.dispatch('showSnackbar', res.msg);
       return res;
     });
-  },
-  resetScoreTags(context) {
-    context.commit('resetScoreTags');
-    return 'done';
   },
 
   // 特色标签
@@ -330,7 +191,7 @@ const actions = {
   },
   updataSpecialTagStatus(context, payload) {
     return BasicService.updataSpecialTagStatus(payload).then(res => {
-      // context.commit('pushScoreTag', scoreTags);
+      context.commit('removeDeprecatedSpecialTags', payload);
       context.dispatch('showSnackbar', res.msg);
       return res;
     });
@@ -357,7 +218,7 @@ const actions = {
   },
   updataMissionTagStatus(context, payload) {
     return BasicService.updataMissionTagStatus(payload).then(res => {
-      // context.commit('pushScoreTag', scoreTags);
+      context.commit('removeDeprecatedMissionTags', payload);
       context.dispatch('showSnackbar', res.msg);
       return res;
     });
@@ -367,11 +228,9 @@ const actions = {
     return 'done';
   },
 
-
-
   getForwardLinks(context, payload) {
     return BasicService.getForwardLinks(payload).then(links => {
-      context.commit('updateForwardLinks', enterprises.content);
+      context.commit('updateForwardLinks', links.content);
       return links;
     });
   },
@@ -387,7 +246,7 @@ const actions = {
   },
   updataForwardLinkStatus(context, payload) {
     return BasicService.updataForwardLinkStatus(payload).then(res => {
-      // context.commit('pushScoreTag', scoreTags);
+      context.commit('removeDeprecatedForwardLinks', payload);
       context.dispatch('showSnackbar', res.msg);
       return res;
     });
@@ -397,11 +256,9 @@ const actions = {
     return 'done';
   },
 
-
-
   getMetroInfos(context, payload) {
-    return BasicService.getMetroInfos(payload).then(metroInfo => {
-      context.commit('updateMetroInfos', metroInfo.content);
+    return BasicService.getMetroInfos(payload).then(metroInfos => {
+      context.commit('updateMetroInfos', metroInfos.content);
       return metroInfos;
     });
   },
@@ -417,7 +274,7 @@ const actions = {
   },
   updataMetroInfoStatus(context, payload) {
     return BasicService.updataMetroInfoStatus(payload).then(res => {
-      // context.commit('pushScoreTag', scoreTags);
+      context.commit('removeDeprecatedMetroInfos', payload);
       context.dispatch('showSnackbar', res.msg);
       return res;
     });
@@ -444,7 +301,7 @@ const actions = {
   },
   updataCommercialDistrictStatus(context, payload) {
     return BasicService.updataCommercialDistrictStatus(payload).then(res => {
-      // context.commit('pushScoreTag', scoreTags);
+      context.commit('removeDeprecatedCommercialDistricts', payload);
       context.dispatch('showSnackbar', res.msg);
       return res;
     });
