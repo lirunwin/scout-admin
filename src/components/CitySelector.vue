@@ -1,7 +1,7 @@
 <template lang="html">
-  <v-container class="py-0 px-0">
+  <v-container fluid grid-list-lg class="py-0">
     <v-layout row wrap class="py-0">
-      <v-flex xs12 sm4>
+      <v-flex :xs12="$vuetify.breakpoint.xs">
         <v-select
           :items="province"
           v-model="location.province"
@@ -14,7 +14,7 @@
           @input="onProvinceChange"
         ></v-select>
       </v-flex>
-      <v-flex xs12 sm4 v-if="!disabledCity">
+      <v-flex :xs12="$vuetify.breakpoint.xs" v-if="disableCity === undefined">
         <v-select
           :items="city"
           v-model="location.city"
@@ -27,7 +27,7 @@
           @input="onCityChange"
         ></v-select>
       </v-flex>
-      <v-flex xs12 sm4 v-if="!disabledCounty">
+      <v-flex :xs12="$vuetify.breakpoint.xs" v-if="disableCity === undefined && disableCounty === undefined">
         <v-select
           :items="county"
           v-model="location.county"
@@ -41,7 +41,6 @@
           ></v-select>
       </v-flex>
     </v-layout>
-    {{county}}
   </v-container>
 </template>
 
@@ -52,7 +51,7 @@ import {
 } from 'vuex'
 export default {
   name: 'CitySelector',
-  props: ['value', 'disabledCity', 'disabledCounty'],
+  props: ['value', 'disableCity', 'disableCounty'],
   data: () => ({
     items: [],
     location: {},
@@ -65,21 +64,10 @@ export default {
       return this.cities.filter(item => item.pid === '0');
     },
     city() {
-      let id = this.location.province;
-      if (id === '0') {
-        return []
-      }
-      let city = this.cities.filter(item => item.pid === id);
-      return city;
+      return this.cities.filter(item => item.pid === this.location.province);
     },
     county() {
-      let id = this.location.city;
-      if (id === '0') {
-        return []
-      }
-      let county = this.cities.filter(item => item.pid === id);
-
-      return county;
+      return this.cities.filter(item => item.pid === this.location.city);
     }
   },
   methods: {
@@ -87,42 +75,48 @@ export default {
     getCity(id) {
       if (!this.isCityLoading) {
         this.isCityLoading = true;
-        this.getCities({
-            id
-          })
+        this.getCities({ id })
           .then(() => this.isCityLoading = false);
       }
     },
     getCounty(id) {
       if (!this.isCountyLoading) {
         this.isCountyLoading = true;
-        this.getCities({
-            id
-          })
+        this.getCities({ id })
           .then(() => this.isCountyLoading = false);
       }
     },
     onProvinceChange(id) {
-      this.onChange();
-      this.location.city = '0';
-      this.location.county = '0';
-      let city = this.cities.filter(item => item.pid === id);
-      if (city.length === 0) {
-        this.getCity(id)
+      if (this.disableCity === undefined) {
+        this.onChange();
+        this.location.city = '0';
+        this.location.county = '0';
+        let city = this.cities.filter(item => item.pid === id);
+        if (city.length === 0) {
+          this.getCity(id)
+        }
       }
     },
     onCityChange(id) {
       this.onChange();
-      this.location.county = '0';
-      let county = this.cities.filter(item => item.pid === id);
-      if (county.length === 0) {
-        this.getCounty(id)
+      if (this.disableCounty === undefined) {
+        this.location.county = '0';
+        let county = this.cities.filter(item => item.pid === id);
+        if (county.length === 0) {
+          this.getCounty(id)
+        }
       }
     },
     onCountyChange() {
       this.onChange();
     },
     onChange() {
+      if (this.disableCity !== undefined) {
+        delete this.location.city
+      }
+      if (this.disableCounty !== undefined) {
+        delete this.location.county
+      }
       this.$emit('input', this.location);
     },
     getDefault() {
@@ -146,11 +140,7 @@ export default {
   },
   mounted() {
     this.location = Object.assign({}, this.value);
-    console.log(this.value);
     this.getDefault();
   }
 }
 </script>
-
-<style lang="css">
-</style>

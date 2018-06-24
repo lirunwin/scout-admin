@@ -5,7 +5,7 @@
       color="primary"
       class="mt-3"
       @click="newTag">
-      {{$route.meta.title}}
+      新增{{$route.meta.title}}
     </v-btn>
     <v-tooltip
       bottom
@@ -175,7 +175,7 @@
                   class="pl-2"
                   style="flex-grow: 0"
                   :input-value="props.item[tableHeaders[index-1].value]">
-                </v-switch>
+                </v-switch>{{props.item[tableHeaders[index-1].value]}}
               </template>
               <template v-else-if="tableHeaders[index-1].constant && tableHeaders[index-1].constant[0]">
                 {{ props.item[tableHeaders[index-1].value] | constantHelper(tableHeaders[index-1].constant[1])}}
@@ -240,7 +240,7 @@ export default {
       return this.$constant.basic;
     },
     tagTypes() {
-      return this.$constant.global.jobType
+      return this.constant.scoreTagTypes
     },
     dataStatus() {
       return this.$constant.global.dataStatus
@@ -260,8 +260,7 @@ export default {
     ...mapActions([
       'getScoreTags',
       'addOrUpdataScoreTag',
-      'updataScoreTagStatus',
-      'resetScoreTags'
+      'updataScoreTagStatus'
     ]),
     newTag() {
       this.tag.status = this.status.off.value;
@@ -300,9 +299,10 @@ export default {
     multiDeprecate() {
       let ids = this.selectedTags.map(tag => tag.id);
       this.updataScoreTagStatus({
-        ids,
-        status: this.status.deprecated.value
-      }).then(() => this.selectedTags = []);
+          ids,
+          status: this.status.deprecated.value
+        })
+        .then(() => this.selectedTags = []);
     },
     closeDialog() {
       this.dialog = false;
@@ -311,8 +311,8 @@ export default {
       }, 300)
     },
     switchStatus(item) {
-      // let tag = Object.assign({}, item);
-      let tag = item;
+      let tag = Object.assign({}, item);
+      // let tag = item;
       let on = this.status.on.value;
       let off = this.status.off.value;
       tag.status === on ? tag.status = off : tag.status = on;

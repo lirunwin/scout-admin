@@ -17,7 +17,6 @@
       <span>批量废弃{{selectedTags.length}}个项目</span>
     </v-tooltip>
     <data-filter
-      :type="tagTypes"
       v-model="filter"
       @search="search"
     ></data-filter> {{filter}} {{pagination}}
@@ -283,9 +282,10 @@ export default {
     multiDeprecate() {
       let ids = this.selectedTags.map(tag => tag.id);
       this.updataMissionTagStatus({
-        ids,
-        status: this.status.deprecated.value
-      }).then(() => this.selectedTags = []);
+          ids,
+          status: this.status.deprecated.value
+        })
+        .then(() => this.selectedTags = []);
     },
     closeDialog() {
       this.dialog = false;
@@ -294,8 +294,8 @@ export default {
       }, 300)
     },
     switchStatus(item) {
-      // let tag = Object.assign({}, item);
-      let tag = item;
+      let tag = Object.assign({}, item);
+      // let tag = item;
       let on = this.status.on.value;
       let off = this.status.off.value;
       tag.status === on ? tag.status = off : tag.status = on;

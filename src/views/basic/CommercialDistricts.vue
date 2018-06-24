@@ -16,11 +16,20 @@
       </v-btn>
       <span>批量废弃{{selectedTags.length}}个项目</span>
     </v-tooltip>
-    <data-filter
-      :type="tagTypes"
-      v-model="filter"
-      @search="search"
-    ></data-filter> {{filter}} {{pagination}}
+    <v-layout row wrap>
+      <v-flex xs12 sm7 md6>
+        <city-selector v-model="locationFilter" />
+      </v-flex>
+      <v-flex xs12 sm3 md4>
+        <v-text-field
+          label="名称"
+          v-model="filter.name"
+        ></v-text-field>
+      </v-flex>
+      <v-flex>
+        <v-btn color="primary" class="mt-3" @click="search">搜索</v-btn>
+      </v-flex>
+    </v-layout>
     <v-dialog v-model="dialog"
       persistent
       max-width="400px">
@@ -196,14 +205,15 @@ import {
   mapActions,
   mapGetters
 } from 'vuex';
-import DataFilter from '@/components/DataFilter';
+import CitySelector from '@/components/CitySelector';
 export default {
   components: {
     Toolbar,
-    DataFilter
+    CitySelector
   },
   data: () => ({
     filter: {},
+    locationFilter: {},
     dialog: false,
     pagination: {},
     tag: {
@@ -299,9 +309,10 @@ export default {
     multiDeprecate() {
       let ids = this.selectedTags.map(tag => tag.id);
       this.updataCommercialDistrictStatus({
-        ids,
-        status: this.status.deprecated.value
-      }).then(() => this.selectedTags = []);
+          ids,
+          status: this.status.deprecated.value
+        })
+        .then(() => this.selectedTags = []);
     },
     closeDialog() {
       this.dialog = false;
@@ -323,10 +334,13 @@ export default {
     },
     search() {
       let rows = this.pagination.rowsPerPage;
-      if (rows < 0) rows = 99999;
-      this.filter.pageindex = 1;
-      this.filter.pagesize = rows * 2 + 1;
+      this.filter = {
+        ...this.locationFilter,
+        pageindex: 1,
+        pagesize: rows * 2
+      }
       this.getData(this.filter);
+      console.log(this.filter);
     },
     getData(params) {
       this.tableLoading = true;

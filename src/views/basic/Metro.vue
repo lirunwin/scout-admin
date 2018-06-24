@@ -1,5 +1,5 @@
 <template lang="html">
-  <v-container fluid>
+  <v-container fluid >
     <toolbar :title="$route.meta.title"></toolbar>
     <v-btn
       color="primary"
@@ -16,12 +16,14 @@
       </v-btn>
       <span>批量废弃{{selectedTags.length}}个项目</span>
     </v-tooltip>
-    <data-filter
-      v-model="filter"
-      :status="false"
-      @search="search"
-      :city="true"
-    ></data-filter> {{filter}} {{pagination}}
+    <v-layout row wrap>
+      <v-flex xs12 sm8 md6>
+        <city-selector v-model="locationFilter" disable-county />
+      </v-flex>
+      <v-flex>
+        <v-btn color="primary" class="mt-3" @click="search">搜索</v-btn>
+      </v-flex>
+    </v-layout>
     <v-dialog v-model="dialog"
       persistent
       max-width="400px">
@@ -42,7 +44,7 @@
               align-center
               wrap>
               <v-flex xs12>
-                <city-selector class="mb-3" v-model="location"></city-selector>
+                <city-selector class="mb-3 px-0" v-model="location" disable-county></city-selector>
               </v-flex>
               <v-flex xs12
                 class="py-0">
@@ -178,16 +180,15 @@ import {
   mapActions,
   mapGetters
 } from 'vuex';
-import DataFilter from '@/components/DataFilter';
 import CitySelector from '@/components/CitySelector';
 export default {
   components: {
     Toolbar,
-    DataFilter,
     CitySelector
   },
   data: () => ({
     filter: {},
+    locationFilter: {},
     dialog: false,
     pagination: {},
     tag: {
@@ -283,9 +284,10 @@ export default {
     multiDeprecate() {
       let ids = this.selectedTags.map(tag => tag.id);
       this.updataMetroInfoStatus({
-        ids,
-        status: this.status.deprecated.value
-      }).then(() => this.selectedTags = []);
+          ids,
+          status: this.status.deprecated.value
+        })
+        .then(() => this.selectedTags = []);
     },
     closeDialog() {
       this.dialog = false;
@@ -294,8 +296,8 @@ export default {
       }, 300)
     },
     switchStatus(item) {
-      // let tag = Object.assign({}, item);
-      let tag = item;
+      let tag = Object.assign({}, item);
+      // let tag = item;
       let on = this.status.on.value;
       let off = this.status.off.value;
       tag.status === on ? tag.status = off : tag.status = on;
@@ -307,10 +309,12 @@ export default {
     },
     search() {
       let rows = this.pagination.rowsPerPage;
-      if (rows < 0) rows = 99999;
       this.filter.pageindex = 1;
-      this.filter.pagesize = rows * 2 + 1;
+      this.filter.pagesize = rows * 2;
+      this.filter.provinceid = this.locationFilter.province;
+      this.filter.cityid = this.locationFilter.city;
       this.getData(this.filter);
+      console.log(this.filter);
     },
     getData(params) {
       this.tableLoading = true;

@@ -89,12 +89,11 @@ const mutations = {
   resetCommercialDistricts: (state) => state.commercialDistricts = [],
   removeDeprecateCommercialDistricts: (state, payload) => removeItemsStatus(state, 'commercialDistricts', payload),
 };
-
-const commitUpdateState = ({commit}, name, payload, newState) => {
-  if (payload.pageindex === 1) {
-    commit(`reset${name}`);
+const commitUpdateState = ({commit}, name, newState) => {
+  if (newState.pageindex === 1) {
+    commit(`rest${name}`);
   }
-  commit(`update${name}`, newState || []);
+  commit(`update${name}`, newState);
   return newState;
 };
 const commitUpdateStateElement = (context, name, newValue, res) => {
@@ -105,7 +104,6 @@ const commitUpdateStateElement = (context, name, newValue, res) => {
   context.commit(`update${name}`, newValue);
   return newValue;
 };
-
 const commitUpdateStateElementStatus = (context, name, payload, res) => {
   context.commit(`removeDeprecated${name}`, payload);
   context.dispatch('showSnackbar', res.msg);
@@ -113,27 +111,29 @@ const commitUpdateStateElementStatus = (context, name, payload, res) => {
 }
 
 const actions = {
-
-  resetBasicInfoState(context, stateName) {
-    context.commit(`reset${stateName}`);
-    return 'done';
-  },
-
-
   // 评分标签
   getScoreTags(context, payload) {
-    return BasicService.getScoreTags(payload).then(res => commitUpdateState(context, 'ScoreTags', payload, res.content));
+    return BasicService.getScoreTags(payload).then(res => commitUpdateState(context, 'ScoreTags', res.content));
   },
   addOrUpdataScoreTag(context, payload) {
-    return BasicService.addOrUpdataScoreTag(payload).then(res => commitUpdateStateElement(context, 'ScoreTag', payload, res));
+    return BasicService.addOrUpdataScoreTag(payload)
+      .then(res => commitUpdateStateElement(context, 'ScoreTag', payload, res));
   },
   updataScoreTagStatus(context, payload) {
     return BasicService.updataScoreTagStatus(payload).then(res => commitUpdateStateElementStatus(context, 'ScoreTags', payload, res));
   },
-
+  resetScoreTags(context) {
+    context.commit('resetScoreTags');
+    return 'done';
+  },
 
 
   // 职位类型
+  getPositions(context, payload) {
+    return BasicService.getPositions(payload).then(positions => {
+      context.commit('updatePositions', positions.content);
+    });
+  },
   // pushToTopLevelPositions
   getTopLevelPositions(context) {
     return BasicService.getPositions({
@@ -144,69 +144,165 @@ const actions = {
       context.commit('updateTopLevelPositions', positions.content);
     });
   },
-  getPositions(context, payload) {
-    return BasicService.getPositions(payload).then(res => commitUpdateState(context, 'Positions', payload, res.content));
-  },
+
   addOrUpdataPosition(context, payload) {
-    return BasicService.addOrUpdataPosition(payload).then(res => commitUpdateStateElement(context, 'Position', payload, res));
+    return BasicService.addOrUpdataPosition(payload).then(res => {
+      context.dispatch('showSnackbar', res.msg);
+      if (!payload.id) {
+        payload.id = res;
+        context.commit('pushToScoreTags', payload);
+        if (payload.pid) {
+          context.commit('pushToTopLevelPositions', payload);
+        }
+      }
+      return payload;
+    });
   },
+
   updataPositionStatus(context, payload) {
-    return BasicService.updataPositionStatus(payload).then(res => commitUpdateStateElementStatus(context, 'Positions', payload, res));
+    return BasicService.updataPositionStatus(payload).then(res => {
+      context.commit('removeDeprecatedPositions', payload);
+      context.dispatch('showSnackbar', res.msg);
+      return res;
+    });
   },
 
   // 特色标签
   getSpecialTags(context, payload) {
-    return BasicService.getSpecialTags(payload).then(res => commitUpdateState(context, 'SpecialTags', payload, res.content));
+    return BasicService.getSpecialTags(payload).then(specialTags => {
+      context.commit('updateSpecialTags', specialTags.content);
+    });
   },
   addOrUpdataSpecialTag(context, payload) {
-    return BasicService.addOrUpdataSpecialTag(payload).then(res => commitUpdateStateElement(context, 'SpecialTag', payload, res));
+    return BasicService.addOrUpdataSpecialTag(payload).then(res => {
+      context.dispatch('showSnackbar', res.msg);
+      if (!payload.id) {
+        payload.id = res;
+        context.commit('pushToScoreTags', payload);
+      }
+      return payload;
+    });
   },
   updataSpecialTagStatus(context, payload) {
-    return BasicService.updataSpecialTagStatus(payload).then(res => commitUpdateStateElementStatus(context, 'SpecialTags', payload, res));
+    return BasicService.updataSpecialTagStatus(payload).then(res => {
+      context.commit('removeDeprecatedSpecialTags', payload);
+      context.dispatch('showSnackbar', res.msg);
+      return res;
+    });
+  },
+  resetSpecialTags(context) {
+    context.commit('resetSpecialTags');
+    return 'done';
   },
 
-  // 任务标签
   getMissionTags(context, payload) {
-    return BasicService.getMissionTags(payload).then(res => commitUpdateState(context, 'MissionTags', payload, res.content));
+    return BasicService.getMissionTags(payload).then(missionTags => {
+      context.commit('updateMissionTags', missionTags.content);
+    });
   },
   addOrUpdataMissionTag(context, payload) {
-    return BasicService.addOrUpdataMissionTag(payload).then(res => commitUpdateStateElement(context, 'MissionTag', payload, res));
+    return BasicService.addOrUpdataMissionTag(payload).then(res => {
+      context.dispatch('showSnackbar', res.msg);
+      if (!payload.id) {
+        payload.id = res;
+        context.commit('pushToMissionTags', payload);
+      }
+      return payload;
+    });
   },
   updataMissionTagStatus(context, payload) {
-    return BasicService.updataMissionTagStatus(payload).then(res => commitUpdateStateElementStatus(context, 'MissionTags', payload, res));
+    return BasicService.updataMissionTagStatus(payload).then(res => {
+      context.commit('removeDeprecatedMissionTags', payload);
+      context.dispatch('showSnackbar', res.msg);
+      return res;
+    });
+  },
+  resetMissionTags(context) {
+    context.commit('resetMissionTags');
+    return 'done';
   },
 
-  //跳转链接
   getForwardLinks(context, payload) {
-    return BasicService.getForwardLinks(payload).then(res => commitUpdateState(context, 'ForwardLinks', payload, res.content));
+    return BasicService.getForwardLinks(payload).then(links => {
+      context.commit('updateForwardLinks', links.content);
+      return links;
+    });
   },
   addOrUpdataForwardLink(context, payload) {
-    return BasicService.addOrUpdataForwardLink(payload).then(res => commitUpdateStateElement(context, 'ForwardLink', payload, res));
+    return BasicService.addOrUpdataForwardLink(payload).then(res => {
+      context.dispatch('showSnackbar', res.msg);
+      if (!payload.id) {
+        payload.id = res;
+        context.commit('pushToForwardLinks', payload);
+      }
+      return payload;
+    });
   },
   updataForwardLinkStatus(context, payload) {
-    return BasicService.updataForwardLinkStatus(payload).then(res => commitUpdateStateElementStatus(context, 'ForwardLinks', payload, res));
+    return BasicService.updataForwardLinkStatus(payload).then(res => {
+      context.commit('removeDeprecatedForwardLinks', payload);
+      context.dispatch('showSnackbar', res.msg);
+      return res;
+    });
+  },
+  resetForwardLinks(context) {
+    context.commit('resetForwardLinks');
+    return 'done';
   },
 
-  // 地铁
   getMetroInfos(context, payload) {
-    return BasicService.getMetroInfos(payload).then(res => commitUpdateState(context, 'MetroInfos', payload, res.content));
+    return BasicService.getMetroInfos(payload).then(metroInfos => {
+      context.commit('updateMetroInfos', metroInfos.content);
+      return metroInfos;
+    });
   },
   addOrUpdataMetroInfo(context, payload) {
-    return BasicService.addOrUpdataMetroInfo(payload).then(res => commitUpdateStateElement(context, 'MetroInfo', payload, res));
+    return BasicService.addOrUpdataMetroInfo(payload).then(res => {
+      context.dispatch('showSnackbar', res.msg);
+      if (!payload.id) {
+        payload.id = res;
+        context.commit('pushToForwardLinks', payload);
+      }
+      return payload;
+    });
   },
   updataMetroInfoStatus(context, payload) {
-    return BasicService.updataMetroInfoStatus(payload).then(res => commitUpdateStateElementStatus(context, 'MetroInfos', payload, res));
+    return BasicService.updataMetroInfoStatus(payload).then(res => {
+      context.commit('removeDeprecatedMetroInfos', payload);
+      context.dispatch('showSnackbar', res.msg);
+      return res;
+    });
+  },
+  resetMetroInfos(context) {
+    context.commit('resetMetroInfos');
+    return 'done';
   },
 
-  // 商圈
   getCommercialDistricts(context, payload) {
-    return BasicService.getCommercialDistricts(payload).then(res => commitUpdateState(context, 'CommercialDistricts', payload, res.content));
+    return BasicService.getCommercialDistricts(payload).then(commercialDistricts => {
+      context.commit('updateCommercialDistricts', commercialDistricts.content);
+    });
   },
   addOrUpdataCommercialDistrict(context, payload) {
-    return BasicService.addOrUpdataCommercialDistrict(payload).then(res => commitUpdateStateElement(context, 'CommercialDistrict', payload, res));
+    return BasicService.addOrUpdataCommercialDistrict(payload).then(res => {
+      context.dispatch('showSnackbar', res.msg);
+      if (!payload.id) {
+        payload.id = res;
+        context.commit('pushToCommercialDistricts', payload);
+      }
+      return payload;
+    });
   },
   updataCommercialDistrictStatus(context, payload) {
-    return BasicService.updataCommercialDistrictStatus(payload).then(res => commitUpdateStateElementStatus(context, 'CommercialDistricts', payload, res));
+    return BasicService.updataCommercialDistrictStatus(payload).then(res => {
+      context.commit('removeDeprecatedCommercialDistricts', payload);
+      context.dispatch('showSnackbar', res.msg);
+      return res;
+    });
+  },
+  resetCommercialDistricts(context) {
+    context.commit('resetCommercialDistricts');
+    return 'done';
   },
 };
 

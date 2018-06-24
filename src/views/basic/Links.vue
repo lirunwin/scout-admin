@@ -237,7 +237,7 @@ export default {
       return this.$constant.basic;
     },
     tagTypes() {
-      return this.$constant.global.jobType;
+      return this.constant.forwardLinksTypes;
     },
     forwardLinksTypes() {
       return this.constant.forwardLinksTypes;
@@ -300,9 +300,10 @@ export default {
     multiDeprecate() {
       let ids = this.selectedTags.map(tag => tag.id);
       this.updataForwardLinkStatus({
-        ids,
-        status: this.status.deprecated.value
-      }).then(() => this.selectedTags = []);
+          ids,
+          status: this.status.deprecated.value
+        })
+        .then(() => this.selectedTags = []);
     },
     closeDialog() {
       this.dialog = false;
@@ -311,8 +312,8 @@ export default {
       }, 300)
     },
     switchStatus(item) {
-      // let tag = Object.assign({}, item);
-      let tag = item;
+      let tag = Object.assign({}, item);
+      // let tag = item;
       let on = this.status.on.value;
       let off = this.status.off.value;
       tag.status === on ? tag.status = off : tag.status = on;
